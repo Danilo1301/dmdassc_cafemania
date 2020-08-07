@@ -44,20 +44,7 @@ class Player {
     this.bg.alpha = 0.3
     this.container.addChild(this.bg);
 
-    const style = new PIXI.TextStyle({
-      fontFamily: 'segoe-ui-black',
-      fontSize: 18,
-			stroke: "#3c1905",
-			lineJoin: "round",
-      strokeThickness: 8,
-      align: "left",
-      fill: ['#ffffff']
-    });
 
-    this.debugText = new PIXI.Text('PLAYER', style);
-    this.debugText.x = 0;
-    this.debugText.y = 0;
-    this.container.addChild(this.debugText);
 
 
     this.goToRandomTile();
@@ -108,8 +95,12 @@ class Player {
       "LegL": 0
     }
 
+    var tint = Math.getRandomInt(0xFFFFFF, 0x000000);
+
     var bodyParts = Game.data.player[part].parts;
     for (var bodyPart of bodyParts) {
+
+
 
       for (var layer of this.skins[part]) {
 
@@ -123,6 +114,7 @@ class Player {
 
         for (var frame of frames) {
           var sprite = new PIXI.Sprite(frame);
+          sprite.tint = tint;
           layerSprites.container.addChild(sprite);
 
           this.baseRender.objects.push(sprite);
@@ -182,7 +174,7 @@ class Player {
 
     //this.sprite.scale.set(0.8)
     //this.sprite.anchor.set(0.5);
-    this.sprite.gotoAndPlay(0);
+    this.sprite.gotoAndPlay(Math.getRandomInt(0, this.sprite_textures.length-1));
     this.container.addChild(this.sprite);
     this.container.pivot.set(100/2, 150-25);
 
@@ -200,7 +192,7 @@ class Player {
     this.container.x = this.position.x;
     this.container.y = this.position.y;
 
-    this.debugText.text = `${this.position.x}, ${this.position.y}\n${this.container.zIndex}`;
+    //this.debugText.text = `${this.position.x}, ${this.position.y}\n${this.container.zIndex}`;
   }
 
   gotoFrame(n)

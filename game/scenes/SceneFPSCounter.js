@@ -19,15 +19,26 @@ class SceneFPSCounter {
     this.fpsText.x = 0;
     this.fpsText.y = 0;
     this.viewport.container.addChild(this.fpsText);
+
+    this.elapsed = 0;
   }
 
   static tick(delta)
   {
-    this.fpsText.text = Math.round(Game.app.ticker.FPS) + " FPS";
+    this.elapsed += delta;
 
-    if(Auth.isSignedIn) {
-      this.fpsText.text += "\n"+Auth.auth2.currentUser.get().getId();
+    if(this.elapsed > 20)
+    {
+      this.elapsed = 0;
+
+      this.fpsText.text = Math.round(Game.app.ticker.FPS) + " FPS";
+
+      if(Auth.isSignedIn) {
+        this.fpsText.text += "\n"+Auth.auth2.currentUser.get().getId();
+      }
     }
+
+
   }
 
   static destroy()

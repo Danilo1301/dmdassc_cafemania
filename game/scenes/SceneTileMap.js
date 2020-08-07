@@ -7,13 +7,14 @@ class SceneTileMap {
 
   static setup()
   {
-    var size = 6;
 
-    for (var ix = -size; ix <= size; ix++) {
-      for (var iy = -size; iy <= size; iy++) {
+    var size = [5,5];
+
+    for (var ix = -size[0]; ix <= size[0]; ix++) {
+      for (var iy = -size[1]; iy <= size[1]; iy++) {
         var tile = new PIXI.Sprite.from("assets/images/tile.png");
-        tile.x = this.viewport.width/2 + ix*158/2 + iy*158/2;
-        tile.y = this.viewport.height/2 + iy*79/2 - ix*79/2;
+        tile.x = this.viewport.width/2 + ix*(158/2+0) + iy*158/2;
+        tile.y = this.viewport.height/2 + iy*(79/2+0) - ix*79/2;
         tile.anchor.set(0.5);
         this.viewport.container.addChild(tile);
 

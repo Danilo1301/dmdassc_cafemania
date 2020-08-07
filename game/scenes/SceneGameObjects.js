@@ -14,12 +14,16 @@ class SceneGameObjects {
       player.targetPos = {x: 1024/2, y: 768/2};
       player.position = {x: 1024/2, y: 768/2};
 
+
+
       player.skins.head.push({layer: "1.layer.eyes", skin: "0.skin.default"})
       player.skins.head.push({layer: "2.layer.mouth", skin: "0.skin.default"})
       player.skins.head.push({layer: "3.layer.eyebrow", skin: "0.skin.default"})
       player.skins.head.push({layer: "4.layer.hair", skin: "0.skin.default"})
       player.skins.arms.push({layer: "1.layer.cloth", skin: "0.skin.default"})
       player.generateSkin();
+
+      
 
       this.players.push(player);
 

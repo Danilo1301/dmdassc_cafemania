@@ -60,23 +60,9 @@ class Viewport {
     this.border.endFill();
     this.border.alpha = 0.5
 
-    this.container.addChild(this.border);
+    //this.container.addChild(this.border);
 
 
-    const style = new PIXI.TextStyle({
-      fontFamily: 'segoe-ui-black',
-      fontSize: 18,
-			stroke: "#3c1905",
-			lineJoin: "round",
-      strokeThickness: 8,
-      align: "left",
-      fill: ['#ffffff']
-    });
-
-    this.debugText = new PIXI.Text('PLAYER', style);
-    this.debugText.x = 0;
-    this.debugText.y = 0;
-    this.container.addChild(this.debugText);
 
     //this.container.addChild(this.mask);
     //this.container.mask = this.mask;
@@ -106,7 +92,7 @@ class Viewport {
   tick()
   {
     this.sort();
-    this.updateDebugText();
+    //this.updateDebugText();
 
     var scale = this.keepAspect ? Game.strechScale : 1;
 

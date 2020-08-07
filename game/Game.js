@@ -10,9 +10,9 @@ class Game {
 
 		this.viewport = Viewports.createViewport(Game.resolution.width, Game.resolution.height);
 
-		//Scenes.loadScene(SceneFPSCounter);
-		//SceneFPSCounter.viewport.keepAspect = true;
-		//SceneFPSCounter.viewport.container.zIndex = 1000;
+		Scenes.loadScene(SceneFPSCounter);
+		SceneFPSCounter.viewport.keepAspect = true;
+		SceneFPSCounter.viewport.container.zIndex = 1000;
 
 
 		Scenes.loadScene(SceneLoadSign);
