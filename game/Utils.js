@@ -1,15 +1,25 @@
 class Utils {
   static setup()
   {
-    Math.lerp = function (value1, value2, amount) {
+    Math.lerp = function(value1, value2, amount) {
     	amount = amount < 0 ? 0 : amount;
     	amount = amount > 1 ? 1 : amount;
     	return value1 + (value2 - value1) * amount;
     };
-    
+
     Number.prototype.clamp = function(min, max) {
       return Math.min(Math.max(this, min), max);
     };
+
+    Math.getRandomArbitrary = function(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    Math.getRandomInt = function(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
   }
 
   static resize(canvas, resolution)

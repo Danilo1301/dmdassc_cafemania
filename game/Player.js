@@ -1,6 +1,7 @@
 class Player {
   constructor()
   {
+    this.position = {x: 0, y: 0}
     this.sprite_textures = [];
     this.skins = {
       head: [
@@ -38,10 +39,36 @@ class Player {
 
     this.bg = new PIXI.Graphics();
     this.bg.beginFill(0xFF0000);
-    this.bg.drawRect(0, 0, 150, 200);
+    this.bg.drawRect(0, 0, 100, 150);
     this.bg.endFill();
     this.bg.alpha = 0.3
     this.container.addChild(this.bg);
+
+    const style = new PIXI.TextStyle({
+      fontFamily: 'segoe-ui-black',
+      fontSize: 18,
+			stroke: "#3c1905",
+			lineJoin: "round",
+      strokeThickness: 8,
+      align: "left",
+      fill: ['#ffffff']
+    });
+
+    this.debugText = new PIXI.Text('PLAYER', style);
+    this.debugText.x = 0;
+    this.debugText.y = 0;
+    this.container.addChild(this.debugText);
+
+
+    this.goToRandomTile();
+  }
+
+  goToRandomTile()
+  {
+    var tile = SceneTileMap.tiles[Math.getRandomInt(0, SceneTileMap.tiles.length-1)];
+    this.targetPos = {x: tile.x, y: tile.y};
+
+    setTimeout(() => { this.goToRandomTile(); }, Math.getRandomArbitrary(5000, 10000))
   }
 
   genSingleSkinFrames(part, bodyPart, layer, skin)
@@ -149,15 +176,31 @@ class Player {
     this.sprite = new PIXI.AnimatedSprite(this.sprite_textures);
     this.sprite.animationSpeed = 0.08;
 
-    this.sprite.scale.set(0.8);
+    this.sprite.scale.set(0.5);
     this.sprite.anchor.set(0.5);
-    this.sprite.position.set(150/2, 200/2);
+    this.sprite.position.set(100/2, 150/2);
 
     //this.sprite.scale.set(0.8)
     //this.sprite.anchor.set(0.5);
     this.sprite.gotoAndPlay(0);
     this.container.addChild(this.sprite);
-    this.container.pivot.set(150/2, 180);
+    this.container.pivot.set(100/2, 150-25);
+
+
+
+  }
+
+  update(delta)
+  {
+    if(this.position.x < this.targetPos.x) { this.position.x += 1; }
+    if(this.position.x > this.targetPos.x) { this.position.x -= 1; }
+    if(this.position.y < this.targetPos.y) { this.position.y += 1; }
+    if(this.position.y > this.targetPos.y) { this.position.y -= 1; }
+
+    this.container.x = this.position.x;
+    this.container.y = this.position.y;
+
+    this.debugText.text = `${this.position.x}, ${this.position.y}\n${this.container.zIndex}`;
   }
 
   gotoFrame(n)

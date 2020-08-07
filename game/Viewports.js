@@ -40,6 +40,8 @@ class Viewport {
     this.center = false;
     this.keepAspect = false;
 
+    this.zoom = 1;
+
     //this.align = ALIGN.NONE; //
 
     this.container = new PIXI.Container();
@@ -56,9 +58,25 @@ class Viewport {
     this.border.beginFill(0xC4C4C4);
     this.border.drawRect(0, 0, this.width, this.height);
     this.border.endFill();
-    this.border.alpha = 0.3
+    this.border.alpha = 0.5
 
     this.container.addChild(this.border);
+
+
+    const style = new PIXI.TextStyle({
+      fontFamily: 'segoe-ui-black',
+      fontSize: 18,
+			stroke: "#3c1905",
+			lineJoin: "round",
+      strokeThickness: 8,
+      align: "left",
+      fill: ['#ffffff']
+    });
+
+    this.debugText = new PIXI.Text('PLAYER', style);
+    this.debugText.x = 0;
+    this.debugText.y = 0;
+    this.container.addChild(this.debugText);
 
     //this.container.addChild(this.mask);
     //this.container.mask = this.mask;
@@ -88,13 +106,14 @@ class Viewport {
   tick()
   {
     this.sort();
-
-    this.container.x = this.position.x;
-    this.container.y = this.position.y;
+    this.updateDebugText();
 
     var scale = this.keepAspect ? Game.strechScale : 1;
 
+    scale = scale * this.zoom;
+
     this.container.scale.x = scale;
+    this.container.scale.y = this.zoom;
 
     if(this.align == ALIGN.LEFT)
     {
@@ -135,8 +154,21 @@ class Viewport {
     if(this.align == ALIGN.CENTER)
     {
       this.container.x = this.parentOf.width/2 + this.position.x - this.width/2*scale;
-      this.container.y = this.parentOf.height/2 + this.position.y - this.height/2;
+      this.container.y = this.parentOf.height/2 + this.position.y - this.height/2*this.zoom;
     }
 
+
+
+  }
+
+  updateDebugText()
+  {
+    this.debugText.text = `position=${this.position.x}, ${this.position.y}`;
+    this.debugText.text += `\ncontainer=${this.container.x}, ${this.container.y}`;
+    this.debugText.text += `\nalign=${this.align}`;
+    this.debugText.text += `\nzoom=${this.zoom}`;
+    this.debugText.text += `\nkeepAspect=${this.keepAspect}`;
+    this.debugText.text += `\n${this.width} x ${this.height}`;
+    this.debugText.text += `\nc=${this.container.width} x ${this.container.height}`;
   }
 }

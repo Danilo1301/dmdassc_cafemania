@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'segoe-ui-black';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+000-5FF;
+  src: url('/assets/fonts/segoe-ui-black-2.woff') format('woff');
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  background: #faedc1;
+  color: white;
+  font-family: 'segoe-ui-black';
+}
+
+#area {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
