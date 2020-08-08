@@ -13,8 +13,6 @@ class SceneGameObjects {
       var player = new Player();
       player.generateSkin();
       player.container.position.set(1024/2+Math.getRandomInt(-300, 300), 768/2+Math.getRandomInt(-300, 300));
-      this.viewport.container.addChild(player.container);
-
 
       this.addObject(player);
     }

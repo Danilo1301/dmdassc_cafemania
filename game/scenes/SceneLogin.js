@@ -5,7 +5,7 @@ class SceneLogin {
 
   static setup()
   {
-    this.background = PIXI.Sprite.from('assets/images/background1.png');
+    this.background = new PIXI.Sprite(Game.resources["background1"].texture);
     this.viewport.container.addChild(this.background);
 
     this.menu = this.viewport.createParentViewport(1024, 768);
