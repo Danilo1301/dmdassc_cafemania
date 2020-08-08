@@ -11,19 +11,19 @@ class SceneLoadSign {
 
   static setup()
   {
-    this.background = PIXI.Sprite.from('assets/images/background1.png');
+    this.background = new PIXI.Sprite(Game.resources["background1"].texture);
     this.viewport.container.addChild(this.background);
 
     this.menu = this.viewport.createParentViewport(1024, 768);
     this.menu.keepAspect = true;
     this.menu.align = ALIGN.CENTER;
 
-    this.sign = PIXI.Sprite.from('assets/images/sign1.png');
+    this.sign = new PIXI.Sprite(Game.resources["sign1"].texture);
     this.sign.anchor.set(0.5)
     this.sign.position.set(this.menu.width/2, this.menu.height/2)
     this.menu.container.addChild(this.sign);
 
-    const style = new PIXI.TextStyle({
+    var style = new PIXI.TextStyle({
       fontFamily: 'segoe-ui-black',
       fontSize: 60,
       lineHeight: 55,

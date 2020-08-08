@@ -3,24 +3,23 @@ class Loadbar {
     this.position = {x: x, y: y};
     this.width = width;
     this.height = height;
+    this.progress = 0;
 
     this.container = new PIXI.Container();
     this.container.pivot.set(width/2, height/2);
 
-    this.background = PIXI.Sprite.from(options.background_src);
+    this.background = new PIXI.Sprite(Game.resources[options.texture].texture);
     this.background.width = this.width;
     this.background.height = this.height;
 
-    this.mask = PIXI.Sprite.from('assets/images/loadbar_mask.png');
+    this.mask = new PIXI.Sprite(Game.resources["loadbar_mask1"].texture);
     this.mask.width = this.width;
     this.mask.height = this.height;
 
-    this.progress = 0;
+    this.background.mask = this.mask;
 
     this.container.addChild(this.background);
     this.container.addChild(this.mask);
-
-    this.background.mask = this.mask;
   }
 
   update()

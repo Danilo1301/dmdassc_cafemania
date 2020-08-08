@@ -1,6 +1,6 @@
 {
   "classes": ["Game", "Utils", "Scenes", "Gui", "Loadbar", "Viewports", "Button", "Net", "Auth", "Player"],
-  "scenes": ["SceneLoadSign", "SceneLoad", "SceneLogin", "SceneFPSCounter", "SceneGameObjects", "SceneTileMap", "SceneGameRender"],
+  "scenes": ["SceneLoadSign", "SceneLoad", "SceneLogin", "SceneFPSCounter", "SceneGameRender", "SceneHud", "SceneRenderPlayer", "SceneTileMap", "SceneGameObjects"],
   "images": [
     {"name": "button.confirm", "src": "button_confirm.png"},
     {"name": "loadbar.1", "src": "loadbar1.png"}

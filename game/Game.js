@@ -2,6 +2,14 @@ class Game {
 	static app;
 	static resolution = {width: 1024, height: 768}
 	static viewport;
+	static resources = {};
+
+	static addResources(resources)
+	{
+		for (var resource in resources) {
+			this.resources[resource] = resources[resource];
+		}
+	}
 
 	static start()
 	{
@@ -10,6 +18,23 @@ class Game {
 
 		this.viewport = Viewports.createViewport(Game.resolution.width, Game.resolution.height);
 
+		var loader = new PIXI.Loader;
+
+		loader.add("background1", "assets/images/background1.png");
+		loader.add("background2", "assets/images/background2.png");
+		loader.add("sign1", "assets/images/sign1.png");
+		loader.add("loadbar1", "assets/images/loadbar1.png");
+		loader.add("loadbar2", "assets/images/loadbar2.png");
+		loader.add("loadbar_mask1", "assets/images/loadbar_mask1.png");
+
+		loader.load(function(loader, resources) {
+			Game.addResources(resources);
+			Game.onFinishPreload();
+		});
+	}
+
+	static onFinishPreload()
+	{
 		Scenes.loadScene(SceneFPSCounter);
 		SceneFPSCounter.viewport.keepAspect = true;
 		SceneFPSCounter.viewport.container.zIndex = 1000;
@@ -32,14 +57,13 @@ class Game {
 				Scenes.loadScene(SceneLoad);
       });
     });
-
 	}
 
 
 	static setupApp()
 	{
 		PIXI.utils.skipHello();
-    this.app = new PIXI.Application({width: this.resolution.width, height: this.resolution.height, backgroundColor: 0x1099bb})
+    this.app = new PIXI.Application({ transparent: true, width: this.resolution.width, height: this.resolution.height})
     this.app.start();
 		this.app.view.style.width = "100%";
 		this.app.view.style.height = "100%";

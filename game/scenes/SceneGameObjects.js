@@ -8,24 +8,13 @@ class SceneGameObjects {
 
   static setup()
   {
-    for (var i = 0; i < 20; i++) {
+
+    for (var i = 0; i < 15; i++) {
       var player = new Player();
-
-      player.targetPos = {x: 1024/2, y: 768/2};
-      player.position = {x: 1024/2, y: 768/2};
-
-
-
-      player.skins.head.push({layer: "1.layer.eyes", skin: "0.skin.default"})
-      player.skins.head.push({layer: "2.layer.mouth", skin: "0.skin.default"})
-      player.skins.head.push({layer: "3.layer.eyebrow", skin: "0.skin.default"})
-      player.skins.head.push({layer: "4.layer.hair", skin: "0.skin.default"})
-      player.skins.arms.push({layer: "1.layer.cloth", skin: "0.skin.default"})
       player.generateSkin();
+      player.container.position.set(1024/2+Math.getRandomInt(-300, 300), 768/2+Math.getRandomInt(-300, 300));
+      this.viewport.container.addChild(player.container);
 
-      
-
-      this.players.push(player);
 
       this.addObject(player);
     }
