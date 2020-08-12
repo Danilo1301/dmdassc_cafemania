@@ -8,16 +8,21 @@ class SceneGameObjects {
 
   static setup()
   {
+  }
 
-    for (var i = 0; i < 15; i++) {
+  static createPlayers()
+  {
+    for (var i = 0; i < 20; i++) {
       var player = new Player();
       player.generateSkin();
-      player.container.position.set(1024/2+Math.getRandomInt(-300, 300), 768/2+Math.getRandomInt(-300, 300));
+      player.container.position.set(-500, 0);
 
       this.addObject(player);
+
+      this.players.push(player);
+
+      RandomPlayerAction.startForPlayer(player);
     }
-
-
   }
 
   static addObject(object)

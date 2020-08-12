@@ -77,6 +77,8 @@ class Game {
 	{
 		Scenes.tick(delta);
 		Viewports.tick(delta);
+
+		Events.clear();
 		//Gui.tick(delta);
 	}
 

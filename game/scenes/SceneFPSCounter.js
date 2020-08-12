@@ -34,7 +34,7 @@ class SceneFPSCounter {
       this.fpsText.text = Math.round(Game.app.ticker.FPS) + " FPS";
 
       if(Auth.isSignedIn) {
-        this.fpsText.text += "\n"+Auth.auth2.currentUser.get().getId();
+        this.fpsText.text += "\n"+Auth.getUserId();
       }
     }
 

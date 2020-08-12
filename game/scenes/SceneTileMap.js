@@ -5,29 +5,54 @@ class SceneTileMap {
 
   static tiles = [];
 
+  static tileFontStyle = new PIXI.TextStyle({
+    fontFamily: 'segoe-ui-black',
+    fontSize: 18,
+    stroke: "#3c1905",
+    lineJoin: "round",
+    strokeThickness: 8,
+    align: "left",
+    fill: ['#ffffff']
+  });
+
   static setup()
   {
-
-    var size = [6,6];
-
-    for (var ix = -size[0]; ix <= size[0]; ix++) {
-      for (var iy = -size[1]; iy <= size[1]; iy++) {
-        var tile = new PIXI.Sprite(Game.resources["tile"].texture);
-        tile.x = this.viewport.width/2 + ix*(158/2+0) + iy*158/2;
-        tile.y = this.viewport.height/2 + iy*(79/2+0) - ix*79/2;
-        tile.anchor.set(0.5);
-        this.viewport.container.addChild(tile);
-
-        this.tiles.push(tile);
+    Events.on("UPDATE_TILE", function(ev) {
+      if(!TileMap.tileExists(ev.x, ev.y)) {
+        TileMap.createTile(ev.x, ev.y);
       }
-    }
+
+      var tile = TileMap.tiles[`${ev.x}:${ev.y}`];
+
+      if(tile.floor) {
+        if(tile.floor.id != ev.data.id) {
+          tile.floor.container.destroy();
+          tile.floor = null;
+        }
+      }
 
 
 
+      if(!tile.floor)
+      {
+        tile.floor = new TileObjectFloor(ev.data.id);
+
+        tile.container.addChild(tile.floor.container);
+        //console.log(tile.floor)
+      }
+
+
+    });
+
+    //TileMap.calculateNeighbours();
   }
+
 
   static tick(delta)
   {
+    for (var tile in this.tiles) {
+      this.tiles[tile].update(tick);
+    }
   }
 
   static destroy()

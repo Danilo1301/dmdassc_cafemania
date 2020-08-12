@@ -58,9 +58,9 @@ class Viewport {
     this.border.beginFill(0xC4C4C4);
     this.border.drawRect(0, 0, this.width, this.height);
     this.border.endFill();
-    this.border.alpha = 0.5
+    this.border.alpha = 0;
 
-    //this.container.addChild(this.border);
+    this.container.addChild(this.border);
 
 
 

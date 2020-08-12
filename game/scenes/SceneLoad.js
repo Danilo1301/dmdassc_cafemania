@@ -6,7 +6,11 @@ class SceneLoad {
   static loadAssets = {
     images: {
       "tile": "assets/images/tile.png",
-      "test_cooker": "assets/images/test_cooker.png"
+      "outsidetile": "assets/images/outsidetile.png",
+      "test_cooker": "assets/images/test_cooker.png",
+      "button_confirm": "assets/images/button_confirm.png",
+      "button_zoom_in": "assets/images/button_zoom_in.png",
+      "button_zoom_out": "assets/images/button_zoom_out.png"
     }
   }
 
@@ -48,8 +52,10 @@ class SceneLoad {
 
     console.log("Getting user info...")
 
-    Net.emit("login", {id: Auth.auth2.currentUser.get().getId()}, function(info) {
-      Game.data = info.data;
+    Net.emit("login", {id: Auth.getUserId()}, function(info) {
+
+      GameLogic.gameData = Game.data = info.data;
+      GameLogic.userData = info.userData;
 
       self.images = {};
 
@@ -73,6 +79,13 @@ class SceneLoad {
 
       for (var image in self.loadAssets.images) {
         loader.add(image, self.loadAssets.images[image]);
+        self.totalProgress[1]++;
+      }
+
+
+
+      for (var floor in Game.data.floor) {
+        loader.add('floor:'+floor, `${Net.server_address}/data/floor/${floor}/image.png`);
         self.totalProgress[1]++;
       }
 

@@ -5,6 +5,8 @@ class Auth {
 
   static loginCallback = null;
 
+  static demo = true;
+
   static signIn(callback) {
     var self = this;
     this.auth2.signIn().then((e) => {
@@ -15,8 +17,20 @@ class Auth {
     });
   }
 
+  static getUserId()
+  {
+    return this.demo ? 19584 : Auth.auth2.currentUser.get().getId();
+  }
+
   static load(callback) {
     this.loginCallback = callback;
+
+    if(this.demo) {
+      this.isSignedIn = true;
+      this.loginCallback();
+      this.loginCallback = null;
+      return
+    }
 
     var self = this;
 
@@ -44,7 +58,7 @@ class Auth {
           console.log(a)
         });
 
-        self.isSignedIn = auth2.isSignedIn.get();;
+        self.isSignedIn = auth2.isSignedIn.get();
         self.loginCallback();
         self.loginCallback = null;
 

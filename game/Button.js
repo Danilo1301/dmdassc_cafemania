@@ -9,7 +9,7 @@ class Button {
 
     this.container = new PIXI.Container();
 
-    this.sprite = new PIXI.Sprite.from(options.background_src);
+    this.sprite = new PIXI.Sprite(Game.resources[options.texture].texture);
     this.sprite.anchor.set(0.5);
     this.sprite.interactive = true;
     this.sprite.buttonMode = true;
