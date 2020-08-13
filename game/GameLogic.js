@@ -11,15 +11,26 @@ GameLogic = class {
     this.userData.inventory = [];
     this.userData.objects = 0;
 
-    for (var x = 0; x < 8; x++) {
-      for (var y = 0; y < 8; y++) {
+    for (var x = 0; x < 12; x++) {
+      for (var y = 0; y < 12; y++) {
         this.createTile(x, y);
+
         this.addObjectToTile(TILE_ITEM.FLOOR_0, x, y);
 
-        if(Math.random() > 0.7) {
-          this.addObjectToTile(TILE_ITEM.COOKER_0, x, y);
+
+        if(Math.random() > 0.9) {
+
+          if(Math.random() > 0.6) {
+            this.addObjectToTile(TILE_ITEM.FLOOR_OBJECT_0, x, y);
+          } else if(Math.random() > 0.2) {
+            this.addObjectToTile(TILE_ITEM.COOKER_0, x, y);
+          } else {
+            this.addObjectToTile(TILE_ITEM.FLOOR_OBJECT_1, x, y);
+          }
+
         }
 
+        Events.trigger("UPDATE_TILE", {x: x, y: y});
       }
     }
   }
@@ -33,8 +44,16 @@ GameLogic = class {
 
     if(object.type == TILE_ITEM_TYPE.FLOOR) {
       tile.floor = id;
-    } else {
+    }
+
+    if(object.type == TILE_ITEM_TYPE.COOKER) {
       var data = {rotation: 0, cooking: Math.round(Math.random()*60), startedAt: Date.now()};
+
+      tile.objects.push({id: id, data: data, uniqueid: this.userData.objects});
+    }
+
+    if(object.type == TILE_ITEM_TYPE.FLOOR_OBJECT) {
+      var data = {rotation: 0, floorobjectData: "f"+Math.round(Math.random()*60)};
 
       tile.objects.push({id: id, data: data, uniqueid: this.userData.objects});
     }

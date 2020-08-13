@@ -278,7 +278,8 @@ class RandomPlayerAction {
 
       pathFind.run((path) => {
 
-
+        GameLogic.addObjectToTile(TILE_ITEM.FLOOR_1, player.onCurrentTile.mapPos.x, player.onCurrentTile.mapPos.y)
+        
         player.taskPlayAnim("Walk_iso_diagonal_front", true);
 
 
@@ -293,7 +294,10 @@ class RandomPlayerAction {
 
         }
 
+
         player.taskPlayAnim("Idle_iso_diagonal_front", true);
+
+
 
       });
     }

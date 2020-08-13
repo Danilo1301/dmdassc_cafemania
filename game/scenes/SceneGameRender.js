@@ -36,9 +36,6 @@ class SceneGameRender {
     SceneGameRender.setCameraToCenterMap();
 
     SceneGameObjects.createPlayers();
-
-    //GameLogic.gameData = Game.data;
-    //GameLogic.createNewGame();
   }
 
   static setupMouseInteractions()

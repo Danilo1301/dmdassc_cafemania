@@ -39,9 +39,21 @@ class SceneTileMap {
 
         if(!tile.objects[object.uniqueid]) {
 
-          tileItem = new TileItemCooker(object.id);
+          var type = Game.data.tileObjects[object.id].type;
+
+          if(type == TILE_ITEM_TYPE.COOKER)
+          {
+            tileItem = new TileItemCooker(object.id);
+          }
+
+          if(type == TILE_ITEM_TYPE.FLOOR_OBJECT)
+          {
+            tileItem = new TileItemFloorObject(object.id);
+          }
+
           tileItem.uniqueid = object.uniqueid;
           tile.addObject(tileItem);
+
         } else {
           tileItem = tile.objects[object.uniqueid];
         }
