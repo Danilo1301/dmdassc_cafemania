@@ -30,6 +30,9 @@ class SceneGameRender {
 
     this.setupMouseInteractions();
 
+
+    GameLogic.createNewGame();
+    TileMap.calculateNeighbours();
     SceneGameRender.setCameraToCenterMap();
 
     SceneGameObjects.createPlayers();

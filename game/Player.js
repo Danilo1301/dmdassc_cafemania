@@ -258,6 +258,8 @@ class RandomPlayerAction {
       }
     }
 
+    if(this.allTiles.length == 0) { return; }
+
     player.warpToTile(0, 0);
 
     this.randomAction(player);
@@ -266,6 +268,7 @@ class RandomPlayerAction {
   static randomAction(player)
   {
     if(player.tasks.length == 0) {
+
 
       var go_to = TileMap.tiles[this.allTiles[Math.getRandomInt(0, this.allTiles.length-1)]].mapPos;
 
@@ -278,10 +281,16 @@ class RandomPlayerAction {
 
         player.taskPlayAnim("Walk_iso_diagonal_front", true);
 
+
         for (var tile_key of path) {
           var tilepos = TileMap.tiles[tile_key].mapPos;
 
-          player.taskGoToTile(tilepos.x, tilepos.y);
+
+          if(TileMap.tiles[tile_key].walkable) {
+            player.taskGoToTile(tilepos.x, tilepos.y);
+          }
+
+
         }
 
         player.taskPlayAnim("Idle_iso_diagonal_front", true);

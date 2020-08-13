@@ -20,7 +20,16 @@ class SceneFPSCounter {
     this.fpsText.y = 0;
     this.viewport.container.addChild(this.fpsText);
 
+    this.moneyText = new PIXI.Text('2', style);
+    this.moneyText.x = 100;
+    this.moneyText.y = 50;
+    this.viewport.container.addChild(this.moneyText);
+
     this.elapsed = 0;
+
+    Events.on("UPDATE_MONEY", function(ev) {
+      SceneFPSCounter.moneyText.text = ev.money;
+    });
   }
 
   static tick(delta)

@@ -19,7 +19,7 @@ Events = class {
 
   static trigger(id, data)
   {
-    console.log(`${id}`, data);
+    //console.log(`${id}`, data);
     this.all.push({id: id, data: data});
 
     if(this.eventCallbacks[id]) {

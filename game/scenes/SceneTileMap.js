@@ -18,30 +18,44 @@ class SceneTileMap {
   static setup()
   {
     Events.on("UPDATE_TILE", function(ev) {
+
       if(!TileMap.tileExists(ev.x, ev.y)) {
         TileMap.createTile(ev.x, ev.y);
       }
 
-      var tile = TileMap.tiles[`${ev.x}:${ev.y}`];
+      var key = `${ev.x}:${ev.y}`;
 
-      if(tile.floor) {
-        if(tile.floor.id != ev.data.id) {
-          tile.floor.container.destroy();
-          tile.floor = null;
+      var tile = TileMap.tiles[key];
+      var tileInfo = GameLogic.userData.tiles[key];
+
+      if(tileInfo.floor != null) {
+        var floor = new TileItemFloor(tileInfo.floor);
+
+        tile.addFloor(floor);
+      }
+
+      for (var object of tileInfo.objects) {
+        var tileItem;
+
+        if(!tile.objects[object.uniqueid]) {
+
+          tileItem = new TileItemCooker(object.id);
+          tileItem.uniqueid = object.uniqueid;
+          tile.addObject(tileItem);
+        } else {
+          tileItem = tile.objects[object.uniqueid];
         }
+
+
+
+        tileItem.data = object.data;
+        tileItem.updateVisual();
+
+        tile.walkable = false;
       }
 
 
-
-      if(!tile.floor)
-      {
-        tile.floor = new TileObjectFloor(ev.data.id);
-
-        tile.container.addChild(tile.floor.container);
-        //console.log(tile.floor)
-      }
-
-
+      //console.log(tileInfo.objects)
     });
 
     //TileMap.calculateNeighbours();
