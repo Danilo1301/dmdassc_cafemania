@@ -19,7 +19,7 @@ class SceneTileMap {
 
     for (var y = 0; y < 10; y++) {
       for (var x = size[0]; x < size[0] + 10; x++) {
-        if(Math.random() > 0.7)
+        if(Math.random() > 0.3)
         {
           TileMap.createTile(x, y);
         }
