@@ -12,7 +12,7 @@ class SceneGameObjects {
 
   static createPlayers()
   {
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 15; i++) {
       var player = new Player();
       player.generateSkin();
       player.container.position.set(-500, 0);

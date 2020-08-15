@@ -5,33 +5,30 @@ class SceneTileMap {
 
   static setup()
   {
-    return
-    
-    var sizex = 2;
-    var sizey = 3;
+  }
 
-    var gridInfo = TileMap.getGridInfo(sizex, sizey);
+  static createMap()
+  {
+    var size = [4,6];
 
-    var background = new PIXI.Graphics();
-    background.beginFill(0x0000FF);
-    background.drawRect(gridInfo.rect.x, gridInfo.rect.y, gridInfo.rect.w, gridInfo.rect.h);
-    background.endFill();
-    background.alpha = 0.1;
-    this.viewport.container.addChild(background);
-
-    for (var y = 0; y < sizey; y++) {
-      for (var x = 0; x < sizex; x++) {
-        var pos = TileMap.getTilePosition(x, y);
-
-        var tile = new PIXI.Sprite(Game.resources["tile"].texture);
-
-        tile.anchor.set(0.5);
-        tile.position.set(pos.x, pos.y);
-
-        this.viewport.container.addChild(tile);
+    for (var y = 0; y < size[1]; y++) {
+      for (var x = 0; x < size[0]; x++) {
+        TileMap.createTile(x, y);
       }
     }
 
+    for (var y = 0; y < 10; y++) {
+      for (var x = size[0]; x < size[0] + 10; x++) {
+        if(Math.random() > 0.7)
+        {
+          TileMap.createTile(x, y);
+        }
+
+      }
+    }
+
+
+    TileMap.calculateNeighbours();
 
   }
 

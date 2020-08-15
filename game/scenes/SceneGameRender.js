@@ -26,23 +26,8 @@ class SceneGameRender {
 
 
     GameLogic.createNewGame();
-
-    var size = [4,6];
-
-    for (var y = 0; y < size[1]; y++) {
-      for (var x = 0; x < size[0]; x++) {
-        TileMap.createTile(x, y);
-      }
-    }
-    TileMap.calculateNeighbours();
-
+    SceneTileMap.createMap();
     this.setupMouseInteractions();
-
-
-    //GameLogic.createNewGame();
-    //TileMap.calculateNeighbours();
-    //SceneGameRender.setCameraToCenterMap();
-
     SceneGameObjects.createPlayers();
   }
 
