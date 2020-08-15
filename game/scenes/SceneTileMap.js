@@ -27,6 +27,9 @@ class SceneTileMap {
       }
     }
 
+    TileMap.tiles["1:1"].walkable = false;
+    TileMap.tiles["1:2"].walkable = false;
+
 
     TileMap.calculateNeighbours();
 

@@ -27,6 +27,9 @@ class SceneGameRender {
 
     GameLogic.createNewGame();
     SceneTileMap.createMap();
+
+    SceneRenderTileItem.renderTiles();
+    
     this.setupMouseInteractions();
     SceneGameObjects.createPlayers();
   }

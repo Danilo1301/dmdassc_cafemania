@@ -60,6 +60,10 @@ class SceneRenderTileItem {
 
   static setup()
   {
+  }
+
+  static renderTiles()
+  {
     for (var tileItemId in Game.data.tileItems) {
       //if(tileItemId != 3) { continue }
 
@@ -143,15 +147,37 @@ class SceneRenderTileItem {
         }
       }
 
-      var sprite = new PIXI.AnimatedSprite(renderTile.textures);
-      //this.sprite.anchor.set(0.5);
-      sprite.position.set(tileItemId*150);
-      sprite.animationSpeed = 0.05
-      sprite.gotoAndPlay(0);
+      var part1 = { container: new PIXI.Container() }
 
-      console.log(sprite)
+      part1.container.x = TileMap.tiles["1:2"].container.x;
+      part1.container.y = TileMap.tiles["1:2"].container.y;
 
-      //SceneGameRender.gameView.container.addChild(sprite);
+      var sprite1 = new PIXI.AnimatedSprite([renderTile.textures[1], renderTile.textures[3]]);
+      sprite1.pivot.set(sprite1.texture.width/2, sprite1.texture.height - TileMap.tileSize.height/2);
+      sprite1.animationSpeed = 0.05;
+      sprite1.gotoAndPlay(0);
+      part1.container.addChild(sprite1);
+
+      SceneGameObjects.addObject(part1);
+
+      //-------
+
+      var part2 = { container: new PIXI.Container() }
+
+      part2.container.x = TileMap.tiles["1:1"].container.x;
+      part2.container.y = TileMap.tiles["1:1"].container.y;
+
+      var sprite2 = new PIXI.AnimatedSprite([renderTile.textures[0], renderTile.textures[2]]);
+      sprite2.pivot.set(sprite2.texture.width/2, sprite2.texture.height - TileMap.tileSize.height/2);
+      sprite2.animationSpeed = 0.05;
+      sprite2.gotoAndPlay(0);
+      part2.container.addChild(sprite2);
+
+      SceneGameObjects.addObject(part2);
+
+
+      //SceneGameRender.gameView.container.addChild(sprite1);
+      //SceneGameRender.gameView.container.addChild(sprite2);
 
       //ObjectOrigin.show(sprite, `tileitem_${tileItemId}`);
 

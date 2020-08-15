@@ -39,7 +39,10 @@ class SceneGameObjects {
     });
 
     for (var object of this.objects) {
-      object.update(delta);
+      if(object.update) {
+        object.update(delta);
+      }
+
     }
   }
 
