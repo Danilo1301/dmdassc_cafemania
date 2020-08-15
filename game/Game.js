@@ -63,6 +63,7 @@ class Game {
 	static setupApp()
 	{
 		PIXI.utils.skipHello();
+		PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
     this.app = new PIXI.Application({ transparent: true, width: this.resolution.width, height: this.resolution.height})
     this.app.start();
 		this.app.view.style.width = "100%";
@@ -77,6 +78,7 @@ class Game {
 	{
 		Scenes.tick(delta);
 		Viewports.tick(delta);
+		ObjectOrigin.update();
 
 		Events.clear();
 		//Gui.tick(delta);

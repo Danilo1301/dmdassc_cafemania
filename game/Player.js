@@ -100,7 +100,7 @@ class Player {
     this.skins.push({part:"legs", skin: "2.layer.shoes:0.skin.default"});
 
     this.container = new PIXI.Container();
-    this.container.scale.set(1);
+    this.container.scale.set(1.4);
     this.container.pivot.set(100/2, 125);
 
     var background = new PIXI.Graphics();
@@ -111,6 +111,8 @@ class Player {
     this.container.addChild(background);
 
     this.setupAnimations();
+
+    ObjectOrigin.show(this.container, `player`);
   }
 
   update(delta)
@@ -278,8 +280,8 @@ class RandomPlayerAction {
 
       pathFind.run((path) => {
 
-        GameLogic.addObjectToTile(TILE_ITEM.FLOOR_1, player.onCurrentTile.mapPos.x, player.onCurrentTile.mapPos.y)
-        
+        //GameLogic.addObjectToTile(TILE_ITEM.FLOOR_1, player.onCurrentTile.mapPos.x, player.onCurrentTile.mapPos.y)
+
         player.taskPlayAnim("Walk_iso_diagonal_front", true);
 
 

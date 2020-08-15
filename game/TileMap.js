@@ -2,22 +2,71 @@ class TileMap {
   static tiles = {};
   static mapSize = {min_x: 0, min_y: 0, max_x: 0, max_y: 0}
 
-  static tileSize = {width: 158, height: 79}
+  static tileSize = {width: 256, height: 128}
 
-  static createTile(x, y)
+  static getTilePosition(x, y)
   {
-    var tile = new Tile();
-
     var w = this.tileSize.width/2;
     var h = this.tileSize.height/2;
 
-    tile.tileKey = `${x}:${y}`;
-    tile.walkable = true;
-    tile.mapPos = {x: x, y: y};
+    return {
+      x: x*w - y*w,
+      y: y*h + x*h
+    }
+  }
 
-    tile.container.x = x*w - y*w;
-    tile.container.y = y*h + x*h;
-    tile.text.text = `(${x},${y})`;
+  static getGridInfo(sizex, sizey)
+  {
+    var w = this.tileSize.width/2;
+    var h = this.tileSize.height/2;
+
+    var info = {
+      rect: {},
+      points: {}
+    }
+
+    info.points["top"] = this.getTilePosition(0, 0);
+    info.points["left"] = this.getTilePosition(0, sizey-1);
+    info.points["right"] = this.getTilePosition(sizex-1, 0);
+    info.points["bottom"] = this.getTilePosition(sizex-1, sizey-1);
+
+    info.rect.w = (info.points["right"].x+w) - (info.points["left"].x-w);
+    info.rect.h = (info.points["bottom"].y+h) - (info.points["top"].y-h);
+
+    info.rect.x = info.points["left"].x-w;
+    info.rect.y = -h;
+
+    return info;
+  }
+
+  static getGridSize(sizex, sizey)
+  {
+    var w = this.tileSize.width/2;
+    var h = this.tileSize.height/2;
+
+    var top = TileMap.getTilePosition(0, 0);
+    var right = TileMap.getTilePosition(sizex-1, 0);
+    var left = TileMap.getTilePosition(0, sizey-1);
+    var bottom = TileMap.getTilePosition(sizex-1, sizey-1);
+
+
+
+
+    return {
+      x: (right.x+w) - (left.x-w),
+      y: (bottom.y+h) - (top.y-h)
+    }
+  }
+
+  static createTile(x, y)
+  {
+    var pos = TileMap.getTilePosition(x, y);
+
+    var tile = new Tile(x, y);
+
+    tile.walkable = true;
+    tile.container.x = pos.x;
+    tile.container.y = pos.y;
 
     this.tiles[tile.tileKey] = tile;
 

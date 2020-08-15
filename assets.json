@@ -1,7 +1,7 @@
 {
-  "classes": ["Game", "Utils", "Scenes", "Gui", "Loadbar", "TileMap", "Tile", "Viewports", "Events", "Button", "GameLogic", "Net", "Auth", "Player", "PathFind"],
-  "scenes": ["SceneLoadSign", "SceneLoad", "SceneLogin", "SceneFPSCounter", "SceneGameRender", "SceneHud", "SceneRenderPlayer", "SceneTileMap", "SceneGameObjects"],
-  "tileObjects": ["TileObject", "TileObjectFloor"],
+  "classes": ["Game", "Utils", "Scenes", "Gui", "Loadbar", "TileMap", "Tile", "ObjectOrigin", "Viewports", "Events", "Button", "GameLogic", "Net", "Auth", "Player", "PathFind"],
+  "scenes": ["SceneLoadSign", "SceneLoad", "SceneLogin", "SceneFPSCounter", "SceneGameRender", "SceneHud", "SceneRenderPlayer", "SceneRenderTileItem", "SceneTileMap", "SceneGameObjects"],
+  "tileItems": ["TileItem"],
   "images": [
     {"name": "button.confirm", "src": "button_confirm.png"},
     {"name": "loadbar.1", "src": "loadbar1.png"}

@@ -12,7 +12,7 @@ class SceneGameObjects {
 
   static createPlayers()
   {
-    for (var i = 0; i < 20; i++) {
+    for (var i = 0; i < 5; i++) {
       var player = new Player();
       player.generateSkin();
       player.container.position.set(-500, 0);
@@ -33,7 +33,10 @@ class SceneGameObjects {
 
   static tick(delta)
   {
-    this.viewport.container.children.sort((itemA, itemB) => itemA.position.y - itemB.position.y);
+
+    this.viewport.container.children.sort((itemA, itemB) => {
+      return itemA.position.y - itemB.position.y;
+    });
 
     for (var object of this.objects) {
       object.update(delta);

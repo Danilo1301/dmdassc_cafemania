@@ -85,23 +85,11 @@ class SceneLoad {
 
 
 
-      for (var objectId in Game.data.tileObjects) {
-        var imgs = ["image"];
+      for (var tileItemId in Game.data.tileItems) {
+        var path = Net.server_address + "/data/" + Game.data.tileItems[tileItemId].path + "/image.png";
 
-        if(Game.data.tileObjects[objectId].images > 0)
-        {
-          for (var i = 1; i < Game.data.tileObjects[objectId].images; i++) {
-            imgs.push("image_"+i);
-          }
-        }
-
-        for (var n = 0; n < imgs.length; n++) {
-          loader.add("gameobject:"+objectId+":"+n, `${Net.server_address}/data/${Game.data.tileObjects[objectId].path}/${imgs[n]}.png`);
-          self.totalProgress[1]++;
-        }
-
-
-
+        loader.add(`tileitem:${tileItemId}`, path)
+        self.totalProgress[1]++;
       }
 
       for (var image_name in self.images) {

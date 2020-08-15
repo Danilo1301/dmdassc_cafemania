@@ -5,7 +5,7 @@
       var promises = [];
       var promises_text = [];
       for (var c of json.classes) { promises.push(fetch('game/'+c+'.js')); }
-      for (var c of json.tileObjects) { promises.push(fetch('game/tileObjects/'+c+'.js')); }
+      for (var c of json.tileItems) { promises.push(fetch('game/tileItems/'+c+'.js')); }
       for (var c of json.scenes) { promises.push(fetch('game/scenes/'+c+'.js')); }
       Promise.all(promises).then((values) => {
         for (var val of values) { promises_text.push(val.text()) }

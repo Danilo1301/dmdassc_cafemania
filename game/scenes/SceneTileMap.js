@@ -3,82 +3,41 @@ class SceneTileMap {
   static viewport;
   static gui;
 
-  static tiles = [];
-
-  static tileFontStyle = new PIXI.TextStyle({
-    fontFamily: 'segoe-ui-black',
-    fontSize: 18,
-    stroke: "#3c1905",
-    lineJoin: "round",
-    strokeThickness: 8,
-    align: "left",
-    fill: ['#ffffff']
-  });
-
   static setup()
   {
-    Events.on("UPDATE_TILE", function(ev) {
+    return
+    
+    var sizex = 2;
+    var sizey = 3;
 
-      if(!TileMap.tileExists(ev.x, ev.y)) {
-        TileMap.createTile(ev.x, ev.y);
+    var gridInfo = TileMap.getGridInfo(sizex, sizey);
+
+    var background = new PIXI.Graphics();
+    background.beginFill(0x0000FF);
+    background.drawRect(gridInfo.rect.x, gridInfo.rect.y, gridInfo.rect.w, gridInfo.rect.h);
+    background.endFill();
+    background.alpha = 0.1;
+    this.viewport.container.addChild(background);
+
+    for (var y = 0; y < sizey; y++) {
+      for (var x = 0; x < sizex; x++) {
+        var pos = TileMap.getTilePosition(x, y);
+
+        var tile = new PIXI.Sprite(Game.resources["tile"].texture);
+
+        tile.anchor.set(0.5);
+        tile.position.set(pos.x, pos.y);
+
+        this.viewport.container.addChild(tile);
       }
-
-      var key = `${ev.x}:${ev.y}`;
-
-      var tile = TileMap.tiles[key];
-      var tileInfo = GameLogic.userData.tiles[key];
-
-      if(tileInfo.floor != null) {
-        var floor = new TileItemFloor(tileInfo.floor);
-
-        tile.addFloor(floor);
-      }
-
-      for (var object of tileInfo.objects) {
-        var tileItem;
-
-        if(!tile.objects[object.uniqueid]) {
-
-          var type = Game.data.tileObjects[object.id].type;
-
-          if(type == TILE_ITEM_TYPE.COOKER)
-          {
-            tileItem = new TileItemCooker(object.id);
-          }
-
-          if(type == TILE_ITEM_TYPE.FLOOR_OBJECT)
-          {
-            tileItem = new TileItemFloorObject(object.id);
-          }
-
-          tileItem.uniqueid = object.uniqueid;
-          tile.addObject(tileItem);
-
-        } else {
-          tileItem = tile.objects[object.uniqueid];
-        }
+    }
 
 
-
-        tileItem.data = object.data;
-        tileItem.updateVisual();
-
-        tile.walkable = false;
-      }
-
-
-      //console.log(tileInfo.objects)
-    });
-
-    //TileMap.calculateNeighbours();
   }
 
 
   static tick(delta)
   {
-    for (var tile in this.tiles) {
-      this.tiles[tile].update(tick);
-    }
   }
 
   static destroy()

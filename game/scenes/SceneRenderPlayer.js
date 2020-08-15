@@ -21,8 +21,6 @@ class SceneRenderPlayer {
     this.canvas.style.background = "gray";
 
     this.ctx = this.canvas.getContext("2d");
-    //document.body.append(this.canvas);
-
   }
 
   static addQueryPlayer(player)
