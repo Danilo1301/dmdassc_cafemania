@@ -14,24 +14,42 @@ class SceneGameRender {
     this.gameView.keepAspect = true;
     this.gameView.align = ALIGN.CENTER;
 
+    Scenes.loadScene(SceneHud);
+
     Scenes.loadScene(SceneRenderPlayer);
     Scenes.loadScene(SceneRenderTileItem);
     Scenes.loadScene(SceneTileMap, this.gameView);
     Scenes.loadScene(SceneGameObjects, this.gameView);
-    Scenes.loadScene(SceneHud);
+
 
     SceneTileMap.viewport.align = ALIGN.CENTER;
     SceneGameObjects.viewport.align = ALIGN.CENTER;
 
+    SceneRenderTileItem.renderTiles();
 
 
     GameLogic.createNewGame();
-    SceneTileMap.createMap();
+    GameLogic.setupGame();
 
-    SceneRenderTileItem.renderTiles();
-    
+
     this.setupMouseInteractions();
+
+    //var tileItem = new TileItemCooker(TILE_ITEM.COOKER_0);
+
+    var newCooker = TileMap.createItem(TILE_ITEM.COOKER_0);
+
+    //newCooker.setRotation(2);
+    setInterval(() => {
+      newCooker.setRotation(Math.getRandomInt(0, 3));
+    }, 500)
+
+    TileMap.tiles["1:1"].placeItem(newCooker);
+
+
+    TileMap.calculateNeighbours()
+
     SceneGameObjects.createPlayers();
+
   }
 
   static setupMouseInteractions()

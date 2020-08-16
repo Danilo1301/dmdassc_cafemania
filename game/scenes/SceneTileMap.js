@@ -5,39 +5,33 @@ class SceneTileMap {
 
   static setup()
   {
-  }
+    Events.on("UPDATE_TILE", data => {
 
-  static createMap()
-  {
-    var size = [4,6];
 
-    for (var y = 0; y < size[1]; y++) {
-      for (var x = 0; x < size[0]; x++) {
-        TileMap.createTile(x, y);
+      var tileData = GameLogic.userData.tiles[`${data.x}:${data.y}`];
+
+      if(!TileMap.tileExists(data.x, data.y))
+      {
+        TileMap.createTile(data.x, data.y);
       }
-    }
 
-    for (var y = 0; y < 10; y++) {
-      for (var x = size[0]; x < size[0] + 10; x++) {
-        if(Math.random() > 0.3)
+      return
+
+      var tile = TileMap.tiles[`${data.x}:${data.y}`];
+
+      for (var tileItem of tileData.objects) {
+        if(!tile.tileItems[tileData.id])
         {
-          TileMap.createTile(x, y);
+          tile.addTileItem(tileItem);
         }
-
       }
-    }
 
-    TileMap.tiles["1:1"].walkable = false;
-    TileMap.tiles["1:2"].walkable = false;
-
-
-    TileMap.calculateNeighbours();
-
+    })
   }
-
 
   static tick(delta)
   {
+
   }
 
   static destroy()

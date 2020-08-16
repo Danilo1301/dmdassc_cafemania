@@ -4,6 +4,30 @@ class TileMap {
 
   static tileSize = {width: 256, height: 128}
 
+  static createItem(id)
+  {
+    var type = GameLogic.gameData.tileItems[id].type;
+    var item;
+
+    if(type == TILE_ITEM_TYPE.COOKER)
+    {
+      item = new TileItemCooker(GameLogic.createCooker(id));
+    }
+
+    item.createSprites();
+    item.createMoveSprite();
+
+    //item.id = tileItem.id;
+    //item.uniqueid = tileItem.uniqueid;
+    //item.tile = this;
+    ///item.data = tileItem.data;
+    //item._object = tileItem;
+
+    //item.create();
+
+    return item;
+  }
+
   static getTilePosition(x, y)
   {
     var w = this.tileSize.width/2;

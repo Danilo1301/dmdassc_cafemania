@@ -111,8 +111,6 @@ class Player {
     this.container.addChild(background);
 
     this.setupAnimations();
-
-    ObjectOrigin.show(this.container, `player`);
   }
 
   update(delta)
@@ -269,7 +267,7 @@ class RandomPlayerAction {
 
   static randomAction(player)
   {
-    if(player.tasks.length == 0) {
+    if(player.tasks.length == 0 && TileMap.path_find_tiles != undefined) {
 
 
       var go_to = TileMap.tiles[this.allTiles[Math.getRandomInt(0, this.allTiles.length-1)]].mapPos;

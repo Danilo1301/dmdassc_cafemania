@@ -7,6 +7,10 @@ class SceneHud {
   {
     this.viewport.container.zIndex = 1000;
 
+    this.overlay = this.viewport.createParentViewport(1024, 768);
+    this.overlay.keepAspect = true
+    this.overlay.align = ALIGN.CENTER
+
     this.right_menu = this.viewport.createParentViewport(300, 768);
     this.right_menu.border.alpha = 0.0;
     this.right_menu.align = ALIGN.RIGHT;
