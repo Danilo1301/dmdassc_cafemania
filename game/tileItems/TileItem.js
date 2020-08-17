@@ -12,7 +12,8 @@ TILE_ITEM_TYPE = {
 TILE_ITEM = {
   FLOOR_0: 0,
   FLOOR_1: 1,
-  COOKER_0: 2
+  COOKER_0: 2,
+  WALL_0: 3
 }
 
 //front   [+extra images]
@@ -47,6 +48,7 @@ class TileItem {
     this.id = data.id;
     this.uniqueid = data.uniqueid;
     this.data = data.data;
+    this.type = Game.data.tileItems[this.id].type;
     this.parts = [];
   }
 
@@ -55,13 +57,13 @@ class TileItem {
     for (var part of this.parts) { part.sprite.destroy(); }
     this.parts = [];
 
-    this.moveSprite.destroy();
+    //this.moveSprite.destroy();
   }
 
   setRotation(rotation)
   {
     this.data.rotation = rotation;
-    
+
     this.destroySprites();
     this.createSprites();
     this.createMoveSprite();
@@ -79,17 +81,24 @@ class TileItem {
     var renderTile = SceneRenderTileItem.tiles[this.id];
     var usingRotation = GameLogic.getRotationData(this.data.rotation);
 
+
+    console.log(this)
+
     for (var t of ocuppedTiles) {
       var textures = [];
 
       for (var i = 0; i < tileItemData.images; i++) {
         var name = `${usingRotation.k}_${i}_${t[2]}:${t[3]}`;
         var index = renderTile.textures_index[name];
+        console.log(name, index)
         textures.push(renderTile.textures[index]);
       }
 
+
+
       var sprite = new PIXI.AnimatedSprite(textures);
-      sprite.gotoAndStop(0);
+      sprite.gotoAndPlay(0);
+      sprite.animationSpeed = 0.05;
       sprite.pivot.set(TileMap.tileSize.width/2, sprite.height-TileMap.tileSize.height/2);
       sprite.scale.x = usingRotation.flipcoords ? -1 : 1;
 
@@ -102,6 +111,8 @@ class TileItem {
 
   createMoveSprite()
   {
+    return
+
     var moveContainer = new PIXI.Container();
 
     for (var part of this.parts) {
@@ -201,6 +212,20 @@ class TileItem {
 }
 
 class TileItemCooker extends TileItem {
+  constructor(data)
+  {
+    super(data);
+  }
+}
+
+class TileItemFloor extends TileItem {
+  constructor(data)
+  {
+    super(data);
+  }
+}
+
+class TileItemWall extends TileItem {
   constructor(data)
   {
     super(data);

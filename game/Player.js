@@ -294,6 +294,16 @@ class RandomPlayerAction {
 
         }
 
+        for (var k in player.onCurrentTile.tileItems) {
+          var isWall = player.onCurrentTile.tileItems[k].type == TILE_ITEM_TYPE.WALL;
+
+          if(!isWall)
+          {
+            player.onCurrentTile.tileItems[k].setRotation(Math.getRandomInt(0, 3));
+          }
+
+        }
+
 
         player.taskPlayAnim("Idle_iso_diagonal_front", true);
 

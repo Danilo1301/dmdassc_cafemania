@@ -14,6 +14,24 @@ class TileMap {
       item = new TileItemCooker(GameLogic.createCooker(id));
     }
 
+    if(type == TILE_ITEM_TYPE.FLOOR)
+    {
+      item = new TileItemFloor(GameLogic.createFloor(id));
+    }
+
+    if(type == TILE_ITEM_TYPE.WALL)
+    {
+      item = new TileItemWall(GameLogic.createWall(id));
+    }
+
+
+
+
+    if(!item)
+    {
+      return console.error("Invalid ID");
+    }
+
     item.createSprites();
     item.createMoveSprite();
 

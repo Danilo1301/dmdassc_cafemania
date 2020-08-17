@@ -32,18 +32,29 @@ class SceneGameRender {
     GameLogic.setupGame();
 
 
+
     this.setupMouseInteractions();
 
     //var tileItem = new TileItemCooker(TILE_ITEM.COOKER_0);
 
-    var newCooker = TileMap.createItem(TILE_ITEM.COOKER_0);
+    for (var i = 1; i < 6; i++) {
+      var item = TileMap.createItem(TILE_ITEM.WALL_0);
 
-    //newCooker.setRotation(2);
-    setInterval(() => {
-      newCooker.setRotation(Math.getRandomInt(0, 3));
-    }, 500)
+      TileMap.tiles["1:"+i].placeItem(item);
+    }
 
-    TileMap.tiles["1:1"].placeItem(newCooker);
+    for (var i = 1; i < 4; i++) {
+      var item = TileMap.createItem(TILE_ITEM.WALL_0);
+
+      item.setRotation(1);
+
+      TileMap.tiles[i+":1"].placeItem(item);
+    }
+
+
+
+
+
 
 
     TileMap.calculateNeighbours()

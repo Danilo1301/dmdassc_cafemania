@@ -35,7 +35,7 @@ class SceneGameObjects {
   {
 
     this.viewport.container.children.sort((itemA, itemB) => {
-      return itemA.position.y - itemB.position.y;
+      return (itemA.displayPosition ? itemA.displayPosition.y : itemA.position.y) - (itemB.displayPosition ? itemB.displayPosition.y : itemB.position.y);
     });
 
     for (var object of this.objects) {

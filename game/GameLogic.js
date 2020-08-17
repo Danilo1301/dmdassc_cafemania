@@ -44,6 +44,12 @@ GameLogic = class {
           x: x,
           y: y
         }
+
+        var customFloor = this.createFloor(Math.random() > 0.5 ? TILE_ITEM.FLOOR_1 : TILE_ITEM.FLOOR_0);
+
+        customFloor.data.custom = 123;
+
+        this.placeItem(customFloor, x, y);
       }
     }
 
@@ -148,6 +154,20 @@ GameLogic = class {
   {
     var item = this.createDefaultItem(id);
     item.data.cooking = 999;
+    return item;
+  }
+
+  static createFloor(id)
+  {
+    var item = this.createDefaultItem(id);
+    item.data.justAFloor = true;
+    return item;
+  }
+
+  static createWall(id)
+  {
+    var item = this.createDefaultItem(id);
+    item.data.isAWall = true;
     return item;
   }
 
