@@ -53,7 +53,9 @@ class SceneTileMap {
 
   static tick(delta)
   {
-
+    for (var tile_key in TileMap.tiles) {
+      TileMap.tiles[tile_key].update(delta);
+    }
   }
 
   static destroy()

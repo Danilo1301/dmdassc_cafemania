@@ -72,9 +72,13 @@ class Tile {
         atTile.topFloor.container.addChild(part.sprite);
       }
     }
+
+    this.topFloor.container.addChild(item.hitbox);
   }
 
   update(delta) {
-    this.topFloor.update(delta);
+    for (var tileItemId in this.tileItems) {
+      this.tileItems[tileItemId].update(delta);
+    }
   }
 }

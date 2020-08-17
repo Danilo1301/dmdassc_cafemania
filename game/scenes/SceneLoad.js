@@ -10,7 +10,9 @@ class SceneLoad {
       "test_cooker": "assets/images/test_cooker.png",
       "button_confirm": "assets/images/button_confirm.png",
       "button_zoom_in": "assets/images/button_zoom_in.png",
-      "button_zoom_out": "assets/images/button_zoom_out.png"
+      "button_zoom_out": "assets/images/button_zoom_out.png",
+      "wallback": "assets/images/wallback.png",
+      "wallmask": "assets/images/wallmask.png"
     }
   }
 

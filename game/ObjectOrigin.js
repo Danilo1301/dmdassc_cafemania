@@ -30,6 +30,14 @@ class ObjectOrigin {
   static update()
   {
     for (var o of this.objects) {
+
+
+      if(o.obj._destroyed) {
+        o.point.destroy();
+        this.objects.splice(this.objects.indexOf(o), 1);
+        continue
+      }
+
       var pos = o.obj.getGlobalPosition();
 
       o.point.x = pos.x;

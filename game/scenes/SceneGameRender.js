@@ -35,29 +35,41 @@ class SceneGameRender {
 
     this.setupMouseInteractions();
 
-    //var tileItem = new TileItemCooker(TILE_ITEM.COOKER_0);
 
     for (var i = 1; i < 6; i++) {
       var item = TileMap.createItem(TILE_ITEM.WALL_0);
-
       TileMap.tiles["1:"+i].placeItem(item);
     }
 
+    var door = item
+    door.createDoor();
+
     for (var i = 1; i < 4; i++) {
       var item = TileMap.createItem(TILE_ITEM.WALL_0);
-
       item.setRotation(1);
-
       TileMap.tiles[i+":1"].placeItem(item);
     }
 
 
 
 
+    var item = TileMap.createItem(TILE_ITEM.COOKER_0);
+    TileMap.tiles["2:2"].placeItem(item);
+    //item.createDoor();
 
+    setInterval(() => {
+      if(door.isDoorOpen)
+      {
+        door.closeDoor();
+      } else {
+        door.openDoor();
+      }
+
+    }, 1500)
 
 
     TileMap.calculateNeighbours()
+
 
     SceneGameObjects.createPlayers();
 
