@@ -25,7 +25,6 @@ class TileTopWall {
     this.container.x = this.tile.container.x;
     this.container.y = this.tile.container.y;
 
-    // /this.container.displayPosition.x = this.container.x - TileMap.tileSize.width/2;
     this.container.displayPosition.y = this.container.y - TileMap.tileSize.height/4;
   }
 }
@@ -52,8 +51,25 @@ class Tile {
     SceneGameObjects.addObject(this.topWall);
   }
 
+  removeItem(uniqueId)
+  {
+    var item = this.tileItems[uniqueId];
+    item.destroy();
+
+    delete this.tileItems[uniqueId];
+
+    return item;
+  }
+
   placeItem(item)
   {
+    if(this.tileItems[item.uniqueid] != undefined) {
+      console.log("already added");
+      return
+    }
+
+    item.createSprites();
+
     this.tileItems[item.uniqueid] = item;
     item.placedAtTile = this;
 
@@ -65,15 +81,17 @@ class Tile {
 
       if(item.type == TILE_ITEM_TYPE.FLOOR)
       {
-        atTile.container.addChild(part.sprite);
+        atTile.container.addChild(part.container);
       } else if(item.type == TILE_ITEM_TYPE.WALL) {
-        atTile.topWall.container.addChild(part.sprite);
+        atTile.topWall.container.addChild(part.container);
       } else {
-        atTile.topFloor.container.addChild(part.sprite);
+        atTile.topFloor.container.addChild(part.container);
       }
+
+      atTile.topFloor.container.addChild(part.hitbox);
     }
 
-    this.topFloor.container.addChild(item.hitbox);
+
   }
 
   update(delta) {

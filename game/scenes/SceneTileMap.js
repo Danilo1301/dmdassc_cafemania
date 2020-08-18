@@ -7,35 +7,88 @@ class SceneTileMap {
   {
     Events.on("UPDATE_TILE", data => {
 
+      console.log(`--- UPDATE_TILE ${data.x} ${data.y}`)
 
       var tileData = GameLogic.userData.tiles[`${data.x}:${data.y}`];
 
+      var tile;
+
       if(!TileMap.tileExists(data.x, data.y))
       {
-        TileMap.createTile(data.x, data.y);
+        tile = TileMap.createTile(data.x, data.y);
+
+        var pos = [tile.container.x, tile.container.y];
+
+        if(tile.mapPos.x < 0)
+        {
+          TileHitbox.addx(pos, -50);
+        }
+
+        if(tile.mapPos.y < 0)
+        {
+          TileHitbox.addy(pos, -50);
+        }
+
+        tile.container.x = pos[0]
+        tile.container.y = pos[1]
       }
+
+      tile = TileMap.tiles[`${data.x}:${data.y}`];
+
+
+
+      var itemsuids = [];
+
+      for (var tileItem of tileData.objects)
+      {
+        itemsuids.push(parseInt(tileItem.uniqueid));
+        var item;
+
+        if(tile.tileItems[tileItem.uniqueid] == undefined) {
+          item = TileMap.createItem(tileItem.id);
+        } else {
+          item = tile.tileItems[tileItem.uniqueid];
+        }
+
+        item.setData(tileItem);
+
+        tile.placeItem(item);
+      }
+
+      for (var item_unique_id in tile.tileItems) {
+        if(!itemsuids.includes(parseInt(item_unique_id)))
+        {
+          tile.removeItem(item_unique_id);
+        }
+      }
+
+      console.log("---------")
+      return
 
       var tile = TileMap.tiles[`${data.x}:${data.y}`];
 
       for (var tileItem of tileData.objects)
       {
-        if(!tile.tileItems[tileData.id])
+        var item;
+
+        console.log("----------")
+        console.log(tile.tileItems)
+
+        if(!tile.tileItems[tileItem.uniqueid])
         {
-          var item = TileMap.createItem(tileItem.id);
-
-          item.uniqueid = tileItem.uniqueid;
-
-          console.log("create item", item)
-
+          item = TileMap.createItem(tileItem.id);
           tile.placeItem(item);
         } else {
-          console.log("already created", item)
+          item = tile.tileItems[tileItem.uniqueid];
+
+          console.log("already ok")
         }
 
-        item.data = tileItem.data;
+        item.setData(tileItem);
+
+        console.log("----------")
       }
 
-      console.log(tileData.objects);
 
       return
 

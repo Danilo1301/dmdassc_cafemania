@@ -93,6 +93,8 @@ class Player {
     this.skins.push({part:"arms", skin: "0.layer.skin:0.skin.default"});
     this.skins.push({part:"legs", skin: "0.layer.skin:0.skin.default"});
     this.skins.push({part:"head", skin: "2.layer.mouth:0.skin.default"});
+    this.skins.push({part:"head", skin: "1.layer.eyes:0.skin.default"});
+    this.skins.push({part:"head", skin: "3.layer.eyebrow:0.skin.default"});
     this.skins.push({part:"head", skin: "4.layer.hair:0.skin.default"});
     this.skins.push({part:"body", skin: "1.layer.cloth:0.skin.default"});
     this.skins.push({part:"arms", skin: "1.layer.cloth:0.skin.default"});

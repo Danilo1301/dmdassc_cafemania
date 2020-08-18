@@ -32,8 +32,7 @@ class TileMap {
       return console.error("Invalid ID");
     }
 
-    item.createSprites();
-    item.createMoveSprite();
+
 
     //item.id = tileItem.id;
     //item.uniqueid = tileItem.uniqueid;
@@ -118,6 +117,8 @@ class TileMap {
     if(x > this.mapSize.max_x) { this.mapSize.max_x = x; }
     if(y < this.mapSize.min_y) { this.mapSize.min_y = y; }
     if(y > this.mapSize.max_y) { this.mapSize.max_y = y; }
+
+    return tile;
   }
 
   static tileExists(x, y)

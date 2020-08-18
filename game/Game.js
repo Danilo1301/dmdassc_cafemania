@@ -63,8 +63,8 @@ class Game {
 	static setupApp()
 	{
 		PIXI.utils.skipHello();
-		PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-    this.app = new PIXI.Application({ transparent: true, width: this.resolution.width, height: this.resolution.height})
+		//PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+    this.app = new PIXI.Application({ forceCanvas: true, transparent: true, width: this.resolution.width, height: this.resolution.height})
     this.app.start();
 		this.app.view.style.width = "100%";
 		this.app.view.style.height = "100%";
