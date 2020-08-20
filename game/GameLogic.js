@@ -76,6 +76,8 @@ GameLogic = class {
     this.createTile(-1, -1);
     for (var x = 0; x < size[0] + 10; x++) { this.createTile(x, -1); }
 
+    var chair = this.createChair(TILE_ITEM.CHAIR_0);
+    this.placeItem(chair, 4, 4);
 
     //console.log(this.userData)
   }
@@ -194,6 +196,13 @@ GameLogic = class {
   {
     var item = this.createDefaultItem(id);
     item.data.justAFloor = true;
+    return item;
+  }
+
+  static createChair(id)
+  {
+    var item = this.createDefaultItem(id);
+    item.data.chairo = 13;
     return item;
   }
 

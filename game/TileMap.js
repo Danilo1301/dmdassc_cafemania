@@ -24,6 +24,11 @@ class TileMap {
       item = new TileItemWall(GameLogic.createWall(id));
     }
 
+    if(type == TILE_ITEM_TYPE.CHAIR)
+    {
+      item = new TileItemChair(GameLogic.createChair(id));
+    }
+
 
 
 

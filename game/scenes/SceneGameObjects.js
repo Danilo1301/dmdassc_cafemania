@@ -12,6 +12,16 @@ class SceneGameObjects {
 
   static createPlayers()
   {
+    var player = new Player();
+    player.generateSkin();
+    this.addObject(player);
+    this.players.push(player);
+
+    player.taskWarpToTile(4, 4);
+    player.taskPlayAnim("Eat_iso_diagonal_back", true);
+
+
+
     for (var i = 0; i < 15; i++) {
       var player = new Player();
       player.generateSkin();
@@ -31,11 +41,17 @@ class SceneGameObjects {
     this.viewport.container.addChild(object.container);
   }
 
+  static removeObject(object)
+  {
+    this.objects.splice(this.objects.indexOf(object), 1);
+    this.viewport.container.removeChild(object.container);
+  }
+
   static tick(delta)
   {
 
     this.viewport.container.children.sort((itemA, itemB) => {
-      return (itemA.displayPosition ? itemA.displayPosition.y : itemA.position.y) - (itemB.displayPosition ? itemB.displayPosition.y : itemB.position.y);
+      return (itemA.displayY ? itemA.displayY : itemA.position.y) - (itemB.displayY ? itemB.displayY : itemB.position.y);
     });
 
     for (var object of this.objects) {

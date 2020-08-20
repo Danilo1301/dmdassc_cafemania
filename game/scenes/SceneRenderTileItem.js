@@ -140,6 +140,35 @@ class SceneRenderTileItem {
       }
 
 
+      if(tileItemData.type == TILE_ITEM_TYPE.WALL)
+      {
+        for (var texture of renderTile.textures) {
+          continue
+          
+          var sprite = new PIXI.Sprite(texture);
+
+          Game.app.stage.addChild(sprite);
+
+          var graphics = new PIXI.Graphics();
+
+          graphics.clear();
+
+          var topLeft = [0,0]
+
+          var w = texture.width;
+          var h = texture.height;
+
+          graphics.beginFill(0xFFFFFF, 0.5);
+          graphics.moveTo(0, 0);
+          graphics.lineTo(w-45, 0);
+          graphics.lineTo(0, 110);
+
+          sprite.mask = graphics;
+
+          Game.app.stage.addChild(graphics);
+
+        }
+      }
     }
 
   }

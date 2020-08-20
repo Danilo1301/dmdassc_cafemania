@@ -1,31 +1,56 @@
-class TileTopFloor {
+class TileTop {
   constructor(tile)
   {
     this.tile = tile;
     this.container = new PIXI.Container();
+    this.offset = 0;
+
+    SceneGameObjects.addObject(this);
   }
 
   update(delta)
   {
     this.container.x = this.tile.container.x;
     this.container.y = this.tile.container.y;
+    this.container.displayY = this.container.y + this.offset;
+  }
+
+  destroy()
+  {
+    SceneGameObjects.removeObject(this);
+    this.container.destroy();
   }
 }
 
-class TileTopWall {
+class TileTopFloor extends TileTop {
   constructor(tile)
   {
-    this.tile = tile;
-    this.container = new PIXI.Container();
-    this.container.displayPosition = {x: 0, y: 0};
+    super(tile);
+  }
+}
+
+class TileTopChair extends TileTop {
+  constructor(tile)
+  {
+    super(tile);
+    this.chair = null;
+
+    ObjectOrigin.show(this.container, "topchair");
   }
 
-  update(delta)
+  destroy()
   {
-    this.container.x = this.tile.container.x;
-    this.container.y = this.tile.container.y;
+    super.destroy();
+    this.tile = null;
+  }
+}
 
-    this.container.displayPosition.y = this.container.y - TileMap.tileSize.height/4;
+class TileTopWall extends TileTop {
+  constructor(tile)
+  {
+    super(tile);
+
+    this.offset = -TileMap.tileSize.height/4;
   }
 }
 
@@ -46,14 +71,12 @@ class Tile {
 
     this.topFloor = new TileTopFloor(this);
     this.topWall = new TileTopWall(this);
-
-    SceneGameObjects.addObject(this.topFloor);
-    SceneGameObjects.addObject(this.topWall);
   }
 
   removeItem(uniqueId)
   {
     var item = this.tileItems[uniqueId];
+    item.placedAtTile = null;
     item.destroy();
 
     delete this.tileItems[uniqueId];
@@ -88,6 +111,29 @@ class Tile {
         atTile.topFloor.container.addChild(part.container);
       }
 
+      if(item.type == TILE_ITEM_TYPE.CHAIR)
+      {
+        if(!this.topChair)
+        {
+          this.topChair = new TileTopChair(this);
+        }
+
+
+        atTile.topChair.container.addChild(item.sprite_topchair);
+        atTile.topChair.chair = item;
+
+        if(item.data.rotation >= 2)
+        {
+          atTile.topFloor.offset = -2;
+          atTile.topChair.offset = 2;
+        } else {
+          atTile.topFloor.offset = 0;
+          atTile.topChair.offset = 0;
+        }
+
+
+      }
+
       atTile.topFloor.container.addChild(part.hitbox);
     }
 
@@ -97,6 +143,15 @@ class Tile {
   update(delta) {
     for (var tileItemId in this.tileItems) {
       this.tileItems[tileItemId].update(delta);
+    }
+
+    if(this.topChair)
+    {
+      if(!this.topChair.chair.placedAtTile)
+      {
+        this.topChair.destroy();
+        delete this.topChair;
+      }
     }
   }
 }

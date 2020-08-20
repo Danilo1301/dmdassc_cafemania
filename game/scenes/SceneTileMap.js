@@ -19,6 +19,8 @@ class SceneTileMap {
 
         var pos = [tile.container.x, tile.container.y];
 
+      
+
         if(tile.mapPos.x < 0)
         {
           TileHitbox.addx(pos, -50);
@@ -59,45 +61,6 @@ class SceneTileMap {
         if(!itemsuids.includes(parseInt(item_unique_id)))
         {
           tile.removeItem(item_unique_id);
-        }
-      }
-
-      console.log("---------")
-      return
-
-      var tile = TileMap.tiles[`${data.x}:${data.y}`];
-
-      for (var tileItem of tileData.objects)
-      {
-        var item;
-
-        console.log("----------")
-        console.log(tile.tileItems)
-
-        if(!tile.tileItems[tileItem.uniqueid])
-        {
-          item = TileMap.createItem(tileItem.id);
-          tile.placeItem(item);
-        } else {
-          item = tile.tileItems[tileItem.uniqueid];
-
-          console.log("already ok")
-        }
-
-        item.setData(tileItem);
-
-        console.log("----------")
-      }
-
-
-      return
-
-      var tile = TileMap.tiles[`${data.x}:${data.y}`];
-
-      for (var tileItem of tileData.objects) {
-        if(!tile.tileItems[tileData.id])
-        {
-          tile.addTileItem(tileItem);
         }
       }
 
