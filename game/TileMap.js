@@ -50,6 +50,11 @@ class TileMap {
     return item;
   }
 
+  static getTile(x, y)
+  {
+    return this.tiles[`${x}:${y}`]
+  }
+
   static getTilePosition(x, y)
   {
     var w = this.tileSize.width/2;

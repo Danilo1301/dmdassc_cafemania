@@ -12,6 +12,28 @@ class SceneGameObjects {
 
   static createPlayers()
   {
+    if(false)
+    {
+      var spawnY = 0;
+      do {
+        spawnY += 1;
+      } while (TileMap.tiles[`-1:${spawnY+1}`]);
+
+      var player = new Player();
+      player.generateSkin();
+      this.addObject(player);
+      this.players.push(player);
+
+      player.taskWarpToTile(-1, spawnY);
+
+      player.taskWalkToTile(-1, 1);
+
+      player.taskGoToTile(0, 0);
+
+      return
+    }
+
+
     var player = new Player();
     player.generateSkin();
     this.addObject(player);
@@ -19,8 +41,6 @@ class SceneGameObjects {
 
     player.taskWarpToTile(4, 4);
     player.taskPlayAnim("Eat_iso_diagonal_back", true);
-
-
 
     for (var i = 0; i < 15; i++) {
       var player = new Player();

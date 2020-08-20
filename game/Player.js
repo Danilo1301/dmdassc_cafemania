@@ -102,7 +102,7 @@ class Player {
     this.skins.push({part:"legs", skin: "2.layer.shoes:0.skin.default"});
 
     this.container = new PIXI.Container();
-    this.container.scale.set(1.4);
+    this.container.scale.set(1.7);
     this.container.pivot.set(100/2, 125);
 
     var background = new PIXI.Graphics();
@@ -209,9 +209,44 @@ class Player {
     this.tasks.push(task);
   }
 
+
   taskGoToTile(x, y)
   {
     var task = new PlayerTask(this.goToTile, arguments);
+    this.tasks.push(task);
+  }
+
+  walkToTile(x, y)
+  {
+    return new Promise((function(completeAction) {
+
+      var tile = TileMap.getTile(x, y);
+      var onTile = this.onCurrentTile;
+
+      var pathFind = new PathFind(onTile.mapPos.x, onTile.mapPos.y, tile.mapPos.x, tile.mapPos.y);
+
+      pathFind.run((path) => {
+
+        console.log(path)
+
+        for (var tile_key of path) {
+          var pos = TileMap.tiles[tile_key].mapPos;
+          if(TileMap.tiles[tile_key].walkable) {
+            this.taskGoToTile(pos.x, pos.y);
+          }
+        }
+
+        completeAction();
+
+      });
+
+
+    }).bind(this))
+  }
+
+  taskWalkToTile(x, y)
+  {
+    var task = new PlayerTask(this.walkToTile, arguments);
     this.tasks.push(task);
   }
 

@@ -47,8 +47,6 @@ class SceneGameRender {
     TileMap.calculateNeighbours()
 
 
-    SceneGameObjects.createPlayers();
-
     TileMap.tiles["4:4"].tileItems[94].setRotation(3);
 
     //TileMap.tiles["4:4"].removeItem(94);
@@ -64,6 +62,11 @@ class SceneGameRender {
       }
 
     }, 1500)
+
+    
+
+    SceneGameObjects.createPlayers();
+
   }
 
   static setupMouseInteractions()

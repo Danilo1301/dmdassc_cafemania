@@ -19,16 +19,16 @@ class SceneTileMap {
 
         var pos = [tile.container.x, tile.container.y];
 
-      
+
 
         if(tile.mapPos.x < 0)
         {
-          TileHitbox.addx(pos, -50);
+          TileHitbox.addx(pos, -30);
         }
 
         if(tile.mapPos.y < 0)
         {
-          TileHitbox.addy(pos, -50);
+          TileHitbox.addy(pos, -30);
         }
 
         tile.container.x = pos[0]

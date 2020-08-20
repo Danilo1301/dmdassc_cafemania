@@ -424,8 +424,8 @@ class TileItemWall extends TileItem {
         wallMask.beginFill(0xFFFFFF);
         wallMask.moveTo(0, 0);
         wallMask.lineTo(140, 0);
-        wallMask.lineTo(140, 40);
-        wallMask.lineTo(0, 110);
+        wallMask.lineTo(140, 65);
+        wallMask.lineTo(0, 135);
         wallMask.pivot.set(TileMap.tileSize.width/2, sprite.height-TileMap.tileSize.height/2);
 
         part.wallMask = wallMask;

@@ -127,8 +127,8 @@ class Tile {
           atTile.topFloor.offset = -2;
           atTile.topChair.offset = 2;
         } else {
-          atTile.topFloor.offset = 0;
-          atTile.topChair.offset = 0;
+          atTile.topFloor.offset = -1;
+          atTile.topChair.offset = -1;
         }
 
 
