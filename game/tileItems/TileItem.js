@@ -114,8 +114,8 @@ class TileHitbox
   {
 
     var point0 = [TileMap.tileSize.width/2, 0]; //right bottom
-    var point1 = [TileMap.tileSize.width/2, -TileMap.tileSize.height*2] //right top
-    var point2 = [0, -TileMap.tileSize.height*2 + TileMap.tileSize.height/2] //left top
+    var point1 = [TileMap.tileSize.width/2, -TileMap.tileSize.height*2.5] //right top
+    var point2 = [0, -TileMap.tileSize.height*2.5 + TileMap.tileSize.height/2] //left top
     var point3 = [0, TileMap.tileSize.height/2] //left bottom
 
 

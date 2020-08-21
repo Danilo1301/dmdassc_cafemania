@@ -26,23 +26,24 @@ class SceneGameObjects {
 
       player.taskWarpToTile(-1, spawnY);
 
-      player.taskWalkToTile(-1, 1);
-
-      player.taskGoToTile(0, 0);
+      //player.taskGoToTile(0, 0);
 
       return
     }
 
+    if(false)
+    {
+      var player = new Player();
+      player.generateSkin();
+      this.addObject(player);
+      this.players.push(player);
 
-    var player = new Player();
-    player.generateSkin();
-    this.addObject(player);
-    this.players.push(player);
+      player.taskWarpToTile(4, 4);
+      player.taskPlayAnim("Eat_iso_diagonal_back", true);
+    }
 
-    player.taskWarpToTile(4, 4);
-    player.taskPlayAnim("Eat_iso_diagonal_back", true);
 
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 10; i++) {
       var player = new Player();
       player.generateSkin();
       player.container.position.set(-500, 0);

@@ -117,10 +117,14 @@ class Player {
 
   update(delta)
   {
+
+
     this.anims.update(delta);
     if(this.anims.currentAnim) {
       this.sprite.gotoAndStop(this.anims.animFrame);
     }
+
+
 
     if(this.tasks.length > 0)
     {
@@ -159,6 +163,44 @@ class Player {
 
         this.container.x += move.x;
         this.container.y += move.y;
+
+
+        var cases = {
+          "0:1": ["iso_front", false],
+          "0:-1": ["iso_back", false],
+          "1:1": ["iso_diagonal_front", false],
+          "-1:-1": ["iso_diagonal_back", true],
+          "1:0": ["iso_side", false],
+          "-1:0": ["iso_side", true],
+          "-1:1": ["iso_diagonal_front", true],
+          "1:-1": ["iso_diagonal_back", false],
+        }
+
+
+
+        var move_dir = {x: diff.x/Math.abs(diff.x) || 0, y: diff.y/Math.abs(diff.y) || 0};
+
+        var c = cases[`${move_dir.x}:${move_dir.y}`];
+
+
+        var playAnim = null;
+        if(c)
+        {
+          playAnim = `Walk_${c[0]}`;
+        }
+
+        var scalex = 1.7;
+
+        if(playAnim)
+        {
+          this.container.scale.x = (c[1] ? -1 : 1) * scalex;
+
+          if(this.anims.currentAnim != playAnim)
+          {
+            this.anims.play(playAnim, true);
+          }
+        }
+
 
 
         if(this.action.moving.walked.x >= this.action.moving.distance.x && this.action.moving.walked.y >= this.action.moving.distance.y)
@@ -317,7 +359,7 @@ class RandomPlayerAction {
 
         //GameLogic.addObjectToTile(TILE_ITEM.FLOOR_1, player.onCurrentTile.mapPos.x, player.onCurrentTile.mapPos.y)
 
-        player.taskPlayAnim("Walk_iso_diagonal_front", true);
+        //player.taskPlayAnim("Walk_iso_diagonal_front", true);
 
 
         for (var tile_key of path) {
@@ -336,13 +378,13 @@ class RandomPlayerAction {
 
           if(!isWall)
           {
-            player.onCurrentTile.tileItems[k].setRotation(Math.getRandomInt(0, 3));
+            //player.onCurrentTile.tileItems[k].setRotation(Math.getRandomInt(0, 3));
           }
 
         }
 
 
-        player.taskPlayAnim("Idle_iso_diagonal_front", true);
+        //player.taskPlayAnim("Idle_iso_diagonal_front", true);
 
 
 
