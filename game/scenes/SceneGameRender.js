@@ -25,48 +25,17 @@ class SceneGameRender {
     SceneTileMap.viewport.align = ALIGN.CENTER;
     SceneGameObjects.viewport.align = ALIGN.CENTER;
 
-
-
-
-
     SceneRenderTileItem.renderTiles();
 
 
     this.setupMouseInteractions();
 
-
-
-
     GameLogic.createNewGame();
     GameLogic.setupGame();
 
-
-
-
-
     TileMap.calculateNeighbours()
 
-
-    TileMap.tiles["4:4"].tileItems[94].setRotation(3);
-
-    //TileMap.tiles["4:4"].removeItem(94);
-
-    TileMap.tiles["0:1"].tileItems[22].createDoorHole()
-
-    setInterval(() => {
-      if(TileMap.tiles["0:1"].tileItems[22].isDoorOpen)
-      {
-        TileMap.tiles["0:1"].tileItems[22].closeDoor()
-      } else {
-        TileMap.tiles["0:1"].tileItems[22].openDoor()
-      }
-
-    }, 1500)
-
-    
-
     SceneGameObjects.createPlayers();
-
   }
 
   static setupMouseInteractions()

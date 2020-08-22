@@ -7,8 +7,6 @@ class SceneTileMap {
   {
     Events.on("UPDATE_TILE", data => {
 
-      console.log(`--- UPDATE_TILE ${data.x} ${data.y}`)
-
       var tileData = GameLogic.userData.tiles[`${data.x}:${data.y}`];
 
       var tile;
@@ -18,8 +16,6 @@ class SceneTileMap {
         tile = TileMap.createTile(data.x, data.y);
 
         var pos = [tile.container.x, tile.container.y];
-
-
 
         if(tile.mapPos.x < 0)
         {
@@ -36,8 +32,6 @@ class SceneTileMap {
       }
 
       tile = TileMap.tiles[`${data.x}:${data.y}`];
-
-
 
       var itemsuids = [];
 
@@ -65,6 +59,17 @@ class SceneTileMap {
       }
 
     })
+  }
+
+  static createOutsideTiles()
+  {
+    for (var y = -1; y < 15; y++) {
+      TileMap.createOutsideTile(-1, y)
+    }
+    for (var x = 0; x < 15; x++) {
+      TileMap.createOutsideTile(x, -1)
+    }
+
   }
 
   static tick(delta)

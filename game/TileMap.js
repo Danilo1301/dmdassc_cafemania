@@ -57,8 +57,8 @@ class TileMap {
 
   static getTilePosition(x, y)
   {
-    var w = this.tileSize.width/2;
-    var h = this.tileSize.height/2;
+    var w = (this.tileSize.width)/2;
+    var h = (this.tileSize.height)/2;
 
     return {
       x: x*w - y*w,
@@ -109,7 +109,7 @@ class TileMap {
     }
   }
 
-  static createTile(x, y)
+  static createTile(x, y, ignoreMax)
   {
     var pos = TileMap.getTilePosition(x, y);
 
@@ -123,12 +123,29 @@ class TileMap {
 
     SceneTileMap.viewport.container.addChild(tile.container);
 
-    if(x < this.mapSize.min_x) { this.mapSize.min_x = x; }
-    if(x > this.mapSize.max_x) { this.mapSize.max_x = x; }
-    if(y < this.mapSize.min_y) { this.mapSize.min_y = y; }
-    if(y > this.mapSize.max_y) { this.mapSize.max_y = y; }
+    if(ignoreMax == undefined)
+    {
+      if(x < this.mapSize.min_x) { this.mapSize.min_x = x; }
+      if(x > this.mapSize.max_x) { this.mapSize.max_x = x; }
+      if(y < this.mapSize.min_y) { this.mapSize.min_y = y; }
+      if(y > this.mapSize.max_y) { this.mapSize.max_y = y; }
+    }
+
 
     return tile;
+  }
+
+  static createOutsideTile(x, y)
+  {
+    var tile = this.createTile(x, y, true);
+
+    var pos = [0,0];
+
+    if(x < 0) { TileHitbox.addx(pos, 30); }
+    if(y < 0) { TileHitbox.addy(pos, 30); }
+
+    tile.container.x -= pos[0];
+    tile.container.y -= pos[1];
   }
 
   static tileExists(x, y)
@@ -138,6 +155,8 @@ class TileMap {
 
   static calculateNeighbours()
   {
+    this.calculateWalkables();
+
     var all_tiles = {};
 
     for (var tile_key in this.tiles) {
@@ -162,7 +181,35 @@ class TileMap {
 
     this.path_find_tiles = all_tiles;
 
-    console.log(this.path_find_tiles, '-------------------')
+
+  }
+
+  static calculateWalkables()
+  {
+
+    for (var tile_key in this.tiles) {
+      var tile = this.tiles[tile_key];
+
+      for(var object_uniqueId in tile.tileItems)
+      {
+        var tileItem = tile.tileItems[object_uniqueId];
+        var type = tileItem.type;
+        var walkable = true;
+
+        if(type == TILE_ITEM_TYPE.CHAIR || type == TILE_ITEM_TYPE.COOKER)
+        {
+          for (var part of tileItem.parts) {
+            var pos = [part.t[0], part.t[1]]
+
+            var nwTile = this.getTile(tile.mapPos.x + pos[0], tile.mapPos.y + pos[1]);
+            nwTile.walkable = false;
+          }
+
+        }
+
+      }
+    }
+
   }
 
 

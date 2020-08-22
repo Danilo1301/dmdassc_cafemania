@@ -23,10 +23,29 @@ class SceneRenderPlayer {
     this.ctx = this.canvas.getContext("2d");
   }
 
-  static addQueryPlayer(player)
+  static addQueryPlayer(player, callback)
   {
 
-    var renderableParts = this.getRenderableParts(player.skins);
+    var options = [];
+
+    for (var s of player.skin.skins) {
+      console.log(s)
+
+      var part = PlayerSkins.parts[s.part];
+
+
+      var layer = part.layers[s.layer];
+
+      var skin = layer.skins[s.skin];
+
+      console.log(layer)
+
+      options.push({part: s.part, skin: `${layer.name}:${skin.name}`});
+    }
+
+    console.log(options)
+
+    var renderableParts = this.getRenderableParts(options);
 
     this.canvas.width = 2000;
     this.canvas.height = 2000;
@@ -57,9 +76,8 @@ class SceneRenderPlayer {
       textures.push(new PIXI.Texture(texture_base, t32Rect));
     }
 
-    player.createSprite(texture_base, textures);
+    callback(texture_base, textures);
   }
-
 
   static renderAnimFrames(renderableParts, anim)
   {

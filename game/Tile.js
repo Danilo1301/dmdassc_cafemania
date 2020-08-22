@@ -34,8 +34,6 @@ class TileTopChair extends TileTop {
   {
     super(tile);
     this.chair = null;
-
-    ObjectOrigin.show(this.container, "topchair");
   }
 
   destroy()
@@ -87,7 +85,6 @@ class Tile {
   placeItem(item)
   {
     if(this.tileItems[item.uniqueid] != undefined) {
-      console.log("already added");
       return
     }
 
@@ -95,7 +92,6 @@ class Tile {
 
     this.tileItems[item.uniqueid] = item;
     item.placedAtTile = this;
-
 
     for (var part of item.parts) {
 

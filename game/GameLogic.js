@@ -61,7 +61,6 @@ GameLogic = class {
           wall.data.rotation = 1;
           this.placeItem(wall, x, y);
 
-          console.warn(wall)
         }
 
 
@@ -70,6 +69,15 @@ GameLogic = class {
         this.placeItem(customFloor, x, y);
       }
     }
+
+
+    this.placeItem(this.createCooker(TILE_ITEM.COOKER_0), 3, 3);
+    this.placeItem(this.createCooker(TILE_ITEM.COOKER_0), 1, 3);
+
+    var rotatedCooker = this.createCooker(TILE_ITEM.COOKER_0);
+    rotatedCooker.data.rotation = 1;
+
+    this.placeItem(rotatedCooker, 1, 1);
 
 
     //for (var y = 0; y < size[1] + 10; y++) { this.createTile(-1, y); }
@@ -84,6 +92,8 @@ GameLogic = class {
 
   static setupGame()
   {
+    SceneTileMap.createOutsideTiles();
+
     for (var tile_key in this.userData.tiles) {
       var tile = this.userData.tiles[tile_key];
       Events.trigger("UPDATE_TILE", {x: tile.x, y: tile.y});
@@ -223,7 +233,6 @@ GameLogic = class {
   {
     //item.data.rotation = 0;
 
-    console.log("place item", item)
 
     var canPlace = this.canItemBePlaced(item, x, y);
 

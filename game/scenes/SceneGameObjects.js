@@ -12,48 +12,30 @@ class SceneGameObjects {
 
   static createPlayers()
   {
-    if(false)
-    {
-      var spawnY = 0;
-      do {
-        spawnY += 1;
-      } while (TileMap.tiles[`-1:${spawnY+1}`]);
-
+    for (var i = 0; i < 15; i++) {
       var player = new Player();
-      player.generateSkin();
-      this.addObject(player);
-      this.players.push(player);
 
-      player.taskWarpToTile(-1, spawnY);
+      player.warpToTile(0, 0);
 
-      //player.taskGoToTile(0, 0);
-
-      return
-    }
-
-    if(false)
-    {
-      var player = new Player();
-      player.generateSkin();
-      this.addObject(player);
-      this.players.push(player);
-
-      player.taskWarpToTile(4, 4);
-      player.taskPlayAnim("Eat_iso_diagonal_back", true);
-    }
-
-
-    for (var i = 0; i < 10; i++) {
-      var player = new Player();
-      player.generateSkin();
-      player.container.position.set(-500, 0);
+      this.testPlayer(player);
 
       this.addObject(player);
 
       this.players.push(player);
-
-      RandomPlayerAction.startForPlayer(player);
     }
+
+
+  }
+
+  static testPlayer(player)
+  {
+    setInterval(() => {
+      if(player.tasks.length == 0)
+      {
+        player.goToTile(Math.getRandomInt(0, TileMap.mapSize.max_x), Math.getRandomInt(0, TileMap.mapSize.max_y));
+
+      }
+    }, 1500)
   }
 
   static addObject(object)
@@ -70,7 +52,6 @@ class SceneGameObjects {
 
   static tick(delta)
   {
-
     this.viewport.container.children.sort((itemA, itemB) => {
       return (itemA.displayY ? itemA.displayY : itemA.position.y) - (itemB.displayY ? itemB.displayY : itemB.position.y);
     });
@@ -79,7 +60,6 @@ class SceneGameObjects {
       if(object.update) {
         object.update(delta);
       }
-
     }
   }
 

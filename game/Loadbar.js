@@ -12,9 +12,10 @@ class Loadbar {
     this.background.width = this.width;
     this.background.height = this.height;
 
-    this.mask = new PIXI.Sprite(Game.resources["loadbar_mask1"].texture);
-    this.mask.width = this.width;
-    this.mask.height = this.height;
+    this.mask = new PIXI.Graphics();
+    this.mask.beginFill(0xFFFFFF);
+    this.mask.drawRect(0, 0, this.width, this.height);
+    this.mask.endFill();
 
     this.background.mask = this.mask;
 
@@ -32,6 +33,6 @@ class Loadbar {
 
   setProgress(progress)
   {
-    this.progress = progress.clamp(0, 1);
+    this.progress = progress.clamp(0.001, 1);
   }
 }

@@ -3,6 +3,9 @@ class SceneLoad {
   static viewport;
   static gui;
 
+  static totalProgress;
+  static loader;
+
   static loadAssets = {
     images: {
       "tile": "assets/images/tile.png",
@@ -16,11 +19,16 @@ class SceneLoad {
     }
   }
 
+  static addLoadImage(name, src)
+  {
+    this.loader.add(name, src);
+    this.totalProgress[1]++;
+  }
+
   static setup()
   {
-    var self = this;
-
     this.totalProgress = [0, 0];
+    this.loader = new PIXI.Loader();
 
     this.background = new PIXI.Sprite(Game.resources["background1"].texture);
     this.viewport.container.addChild(this.background);
@@ -54,74 +62,47 @@ class SceneLoad {
 
     console.log("Getting user info...")
 
-    Net.emit("login", {id: Auth.getUserId()}, function(info) {
-
-      GameLogic.gameData = Game.data = info.data;
-      GameLogic.userData = info.userData;
-
-      self.images = {};
-
-      for (var part in info.data.player) {
-        for (var layer in info.data.player[part].layers) {
-          for (var skin in info.data.player[part].layers[layer].skins) {
-            for (var bodyPart of info.data.player[part].parts) {
-              for (var anim in info.data.animations) {
-                var src = `${Net.server_address}/data/player/${part}/${layer}/${skin}/${anim}_${bodyPart}.png`;
-                var name = `player_sheet.${part}:${layer}:${skin}:${anim}:${bodyPart}`;
-                self.images[name] = {name: name, src: src, target: info.data.player[part].layers[layer].skins[skin], part: part, layer: layer, skin: skin, bodyPart: bodyPart, anim: anim}
-              }
-            }
-          }
-        }
-      }
-
-
-
-      const loader = new PIXI.Loader();
-
-      for (var image in self.loadAssets.images) {
-        loader.add(image, self.loadAssets.images[image]);
-        self.totalProgress[1]++;
-      }
-
-
-
-
-      for (var tileItemId in Game.data.tileItems) {
-        var path = Net.server_address + "/data/" + Game.data.tileItems[tileItemId].path + "/image.png";
-
-        loader.add(`tileitem:${tileItemId}`, path)
-        self.totalProgress[1]++;
-      }
-
-      for (var image_name in self.images) {
-        var image = self.images[image_name];
-
-        loader.add(image.name, image.src)
-        self.totalProgress[1]++;
-      }
-
-      loader.onProgress.add(() => {
-        self.totalProgress[0]++;
-      });
-
-      loader.load((loader, resources) => {
-        Game.addResources(resources);
-
-        for (var res in resources) {
-          var sheet = self.images[res];
-          if(!sheet) { continue };
-          sheet.target[sheet.anim + "." + sheet.bodyPart] = sheet.name;
-        }
-
-        self.onFinishLoad();
-      });
-
-    });
+    Net.emit("login", {id: Auth.getUserId()}, this.onReceiveInfo.bind(this));
   }
 
-  static onFinishLoad()
+  static onReceiveInfo(info)
   {
+    GameLogic.gameData = Game.data = info.data;
+    GameLogic.userData = info.userData;
+
+    PlayerSkins.setupSkins(info.data.player);
+
+    for (var image in this.loadAssets.images) { this.addLoadImage(image, this.loadAssets.images[image]); }
+
+    for (var tileItemId in Game.data.tileItems) {
+      this.addLoadImage(
+        `tileitem:${tileItemId}`,
+        Net.server_address + "/data/" + Game.data.tileItems[tileItemId].path + "/image.png"
+      );
+    }
+
+    for (var sheet_name in PlayerSkins.sheets) {
+      var sheet = PlayerSkins.sheets[sheet_name];
+      this.addLoadImage(
+        sheet.name,
+        Net.server_address + "/data/player/" + sheet.src
+      );
+    }
+
+
+    this.loader.onProgress.add(() => { this.totalProgress[0]++; });
+
+    this.loader.load( this.onFinishLoad.bind(this) );
+  }
+
+  static onFinishLoad(loader, resources)
+  {
+    for(var sheet of PlayerSkins.sheets)
+    {
+      sheet.texture = resources[sheet.name].texture;
+    }
+
+    Game.addResources(resources);
 
     console.log("[SceneLoad] Load finished")
     Scenes.destroyScene(SceneLoad);
@@ -130,12 +111,9 @@ class SceneLoad {
 
   static tick(delta)
   {
-    this.loadbar.setProgress(this.totalProgress[0]/this.totalProgress[1]);
-    this.loadText.text = (Math.round(this.loadbar.progress*100) || 0) + "%";
 
-    if(this.loadbar.progress >= 1) {
-      //Scenes.destroyScene(SceneLoad);
-    }
+    this.loadbar.setProgress((this.totalProgress[0]/this.totalProgress[1]) || 0);
+    this.loadText.text = (Math.round(this.loadbar.progress*100) || 0) + "%";
   }
 
   static destroy()
